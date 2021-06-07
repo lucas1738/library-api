@@ -2,3 +2,14 @@ server:
   port: 9090
   servlet:
     context-path: /library-api
+
+spring:
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+  datasource:
+    platform: postgres
+    url: jdbc:postgresql://localhost:5432/library_db?useSSL=false
+    username: lucasbarbosa
+    password: lucas123
+    driverClassName: org.postgresql.Driver
