@@ -13,7 +13,6 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 
 @RestController
-@RequestMapping("/books")
 public class BookController {
 
     private final BookRepository bookRepository;
@@ -22,13 +21,13 @@ public class BookController {
         this.bookRepository = bookRepository;
     }
 
-    @GetMapping
+    @GetMapping("/books")
     public List<BookResponseDTO> fetchBooks() {
         return this.bookRepository.findAll().stream().map(BookResponseDTO::of).collect(toList());
     }
 
-    @PostMapping
-    public ResponseEntity<?> createBook(@Validated @RequestBody BookRequestDTO bookRequestDTO) {
+    @PostMapping("/book")
+    public ResponseEntity<BookResponseDTO> createBook(@Validated @RequestBody BookRequestDTO bookRequestDTO) {
         var book = this.bookRepository.save(BookRequestDTO.toDomain(bookRequestDTO));
         return ResponseEntity.status(HttpStatus.CREATED).body(BookResponseDTO.of(book));
     }
