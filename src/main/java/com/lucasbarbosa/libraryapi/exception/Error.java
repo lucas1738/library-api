@@ -1,6 +1,8 @@
 package com.lucasbarbosa.libraryapi.exception;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.server.ResponseStatusException;
@@ -19,9 +21,7 @@ public class Error {
         bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).forEach(this.errors::add);
     }
 
-
-    public Error(ResponseStatusException ex) {
-        this.errors = Collections.singletonList(ex.getReason());
+    public Error(String message) {
+        this.errors = Collections.singletonList(message);
     }
-
 }
