@@ -1,6 +1,7 @@
 package com.lucasbarbosa.libraryapi.exception;
 
-import com.lucasbarbosa.libraryapi.exception.custom.BusinessException;
+import com.lucasbarbosa.libraryapi.exception.custom.AttributeInUseException;
+import com.lucasbarbosa.libraryapi.utils.LibraryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -10,10 +11,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import static com.lucasbarbosa.libraryapi.utils.LibraryUtils.buildWithThreeParams;
 
 @RestControllerAdvice
 public class LibraryApiExceptionHandler {
@@ -23,18 +21,14 @@ public class LibraryApiExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Error handleValidationExceptions(MethodArgumentNotValidException ex){
+    public Error handleValidationExceptions(MethodArgumentNotValidException ex) {
         return new Error(ex.getBindingResult());
     }
 
-    @ExceptionHandler(BusinessException.class)
+    @ExceptionHandler(AttributeInUseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Error handleBusinessExceptions(BusinessException ex){
-        return new Error(messageSource.getMessage("attribute.in.use", extractExceptionParams(Arrays.asList(ex.getFirst(), ex.getSecond(), ex.getThird())), LocaleContextHolder.getLocale()));
-    }
-
-    private Object[] extractExceptionParams(List<String> params) {
-        return params.toArray();
+    public Error handleAttributeInUseException(AttributeInUseException ex) {
+        return new Error(messageSource.getMessage(LibraryUtils.getAttributeInUseMessageReference(), buildWithThreeParams(ex.getFirst(), ex.getSecond(), ex.getThird()), LocaleContextHolder.getLocale()));
     }
 
 }
