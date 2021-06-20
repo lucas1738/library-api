@@ -5,6 +5,8 @@ import lombok.*;
 
 import java.util.function.Function;
 
+import static com.lucasbarbosa.libraryapi.utils.DateUtils.formatDateTime;
+
 @Getter
 @Setter
 @Builder
@@ -20,6 +22,10 @@ public class BookResponseDTO {
 
     private int numberPages;
 
+    private String creationDate;
+
+    private String updateDate;
+
 
     public static BookResponseDTO of(Book book) {
         return disassemble.apply(book);
@@ -31,6 +37,8 @@ public class BookResponseDTO {
                     .title(book.getTitle())
                     .author(book.getAuthor())
                     .numberPages(book.getNumberPages())
+                    .creationDate(formatDateTime(book.getCreationDate()))
+                    .updateDate(formatDateTime(book.getUpdateDate()))
                     .build();
 
 }

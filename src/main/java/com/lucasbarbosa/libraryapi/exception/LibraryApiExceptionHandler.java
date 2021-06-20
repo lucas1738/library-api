@@ -1,7 +1,6 @@
 package com.lucasbarbosa.libraryapi.exception;
 
 import com.lucasbarbosa.libraryapi.exception.custom.AttributeInUseException;
-import com.lucasbarbosa.libraryapi.utils.LibraryUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -11,7 +10,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import static com.lucasbarbosa.libraryapi.utils.LibraryUtils.buildWithThreeParams;
+import static com.lucasbarbosa.libraryapi.utils.ExceptionUtils.buildWithThreeParams;
+import static com.lucasbarbosa.libraryapi.utils.ExceptionUtils.getAttributeInUseMessageReference;
 
 @RestControllerAdvice
 public class LibraryApiExceptionHandler {
@@ -28,7 +28,7 @@ public class LibraryApiExceptionHandler {
     @ExceptionHandler(AttributeInUseException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Error handleAttributeInUseException(AttributeInUseException ex) {
-        return new Error(messageSource.getMessage(LibraryUtils.getAttributeInUseMessageReference(), buildWithThreeParams(ex.getFirst(), ex.getSecond(), ex.getThird()), LocaleContextHolder.getLocale()));
+        return new Error(messageSource.getMessage(getAttributeInUseMessageReference(), buildWithThreeParams(ex.getFirst(), ex.getSecond(), ex.getThird()), LocaleContextHolder.getLocale()));
     }
 
 }
