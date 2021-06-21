@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.utils;
+package com.lucasbarbosa.libraryapi.driver.utils;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;

@@ -1,7 +1,6 @@
-package com.lucasbarbosa.libraryapi.exception.custom;
+package com.lucasbarbosa.libraryapi.driver.exception.custom;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

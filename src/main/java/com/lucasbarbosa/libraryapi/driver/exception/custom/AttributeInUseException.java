@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.exception.custom;
+package com.lucasbarbosa.libraryapi.driver.exception.custom;
 
 public class AttributeInUseException extends BusinessException{
 

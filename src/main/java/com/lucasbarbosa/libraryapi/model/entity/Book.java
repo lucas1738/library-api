@@ -1,5 +1,7 @@
-package com.lucasbarbosa.libraryapi.entity;
+package com.lucasbarbosa.libraryapi.model.entity;
 
+import com.lucasbarbosa.libraryapi.driver.converter.BookGenreEnumCharConverter;
+import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import lombok.*;
 
 import javax.persistence.*;
@@ -32,6 +34,10 @@ public class Book {
 
     @Column(name="dt_update")
     private LocalDateTime updateDate;
+
+    @Column(name="book_genre")
+    @Convert(converter = BookGenreEnumCharConverter.class)
+    private BookGenreEnum bookGenre;
 
     @PrePersist
     private void onCreation(){

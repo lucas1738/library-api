@@ -1,6 +1,6 @@
 package com.lucasbarbosa.libraryapi.repository;
 
-import com.lucasbarbosa.libraryapi.entity.Book;
+import com.lucasbarbosa.libraryapi.model.entity.Book;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
