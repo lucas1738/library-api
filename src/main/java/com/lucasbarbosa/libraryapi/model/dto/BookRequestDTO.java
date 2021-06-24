@@ -10,7 +10,6 @@ import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
-import java.util.Arrays;
 import java.util.UUID;
 import java.util.function.Function;
 
@@ -39,10 +38,7 @@ public class BookRequestDTO {
   private int numberPages;
 
   @ApiModelProperty(value = "Book genre", example = "THRILLER", required = true)
-  @EnumAssurance(
-      enumClass = BookGenreEnum.class,
-      field = "bookGenre",
-      allowedValues = "ACTION, COMEDY, DRAMA, FANTASY, ROMANCE, THRILLER, MYSTERY, HORROR")
+  @EnumAssurance(enumClass = BookGenreEnum.class, field = "bookGenre")
   @NotEmpty(message = "bookGenre must not be empty or null")
   private String bookGenre;
 

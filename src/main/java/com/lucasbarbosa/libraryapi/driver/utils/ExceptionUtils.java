@@ -13,6 +13,7 @@ public class ExceptionUtils {
     private static final String TITLE = "title";
 
     private static final String ATTRIBUTE_IN_USE = "attribute.in.use";
+    private static final String MESSAGE_NOT_READABLE = "message.not.readable";
 
     public static String getTitleAsConst(){
         return TITLE;
@@ -22,8 +23,12 @@ public class ExceptionUtils {
         return BOOK;
     }
 
-    public static String getAttributeInUseMessageReference(){
+    public static String getAttributeInUseReference(){
         return ATTRIBUTE_IN_USE;
+    }
+
+    public static String getMessageNotReadableReference(){
+        return MESSAGE_NOT_READABLE;
     }
 
     public static Object[] buildWithSingleParam(String first){
