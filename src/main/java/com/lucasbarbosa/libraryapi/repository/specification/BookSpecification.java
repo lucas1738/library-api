@@ -27,6 +27,10 @@ public class BookSpecification extends BookSpecificationSupport {
         .orElse(null);
   }
 
+  public static Specification<Book> byISBN(String isbn) {
+    return Optional.ofNullable(isbn).map(BookSpecificationSupport::setUpISBN).orElse(null);
+  }
+
   public static Specification<Book> byCreationDate(String initialDate, String finalDate) {
     LocalDate startDate = Optional.ofNullable(initialDate).map(LocalDate::parse).orElse(null);
     LocalDate endDate = Optional.ofNullable(finalDate).map(LocalDate::parse).orElse(null);

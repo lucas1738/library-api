@@ -21,6 +21,10 @@ public class BookSpecificationSupport {
         cb.like(cb.upper(root.get(Book_.AUTHOR)), generateSpecificationQueryPattern(author));
   }
 
+  protected static Specification<Book> setUpISBN(String isbn) {
+    return (root, query, cb) -> (cb.equal(root.get(Book_.ISBN), isbn));
+  }
+
   protected static Specification<Book> setUpBookGenre(BookGenreEnum bookGenreEnum) {
     return (root, query, cb) -> (cb.equal(root.get(Book_.BOOK_GENRE), bookGenreEnum));
   }

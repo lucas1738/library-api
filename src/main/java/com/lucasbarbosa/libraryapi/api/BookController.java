@@ -42,6 +42,12 @@ public class BookController {
       })
   @ApiImplicitParams({
     @ApiImplicitParam(
+        name = "isbn",
+        value = "International Standard Book Number",
+        required = false,
+        dataType = "string",
+        paramType = "query"),
+    @ApiImplicitParam(
         name = "title",
         value = "Book Title",
         required = false,
@@ -94,6 +100,7 @@ public class BookController {
         paramType = "query")
   })
   public List<BookResponseDTO> fetchBooks(
+      @RequestParam(name = "isbn", required = false) String isbn,
       @RequestParam(name = "title", required = false) String title,
       @RequestParam(name = "author", required = false) String author,
       @RequestParam(name = "bookGenre", required = false) String bookGenre,
@@ -104,6 +111,7 @@ public class BookController {
 
     Specification<Book> specificationFilter =
         Specification.where(BookSpecification.byAuthor(author))
+            .and(BookSpecification.byISBN(isbn))
             .and(BookSpecification.byTitle(title))
             .and(BookSpecification.byBookGenre(bookGenre))
             .and(BookSpecification.byCreationDate(initialDate, finalDate))
