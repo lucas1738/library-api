@@ -33,6 +33,8 @@ dependencies {
 	implementation('org.springframework.boot:spring-boot-starter-validation')
 	implementation group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
 	compileOnly 'org.projectlombok:lombok'
+	compileOnly 'org.hibernate:hibernate-jpamodelgen'
+	annotationProcessor('org.hibernate:hibernate-jpamodelgen')
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	runtimeOnly 'org.postgresql:postgresql'
 	annotationProcessor 'org.projectlombok:lombok'
