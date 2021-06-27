@@ -29,18 +29,18 @@ public class BookSpecification extends BookSpecificationSupport {
   }
 
   public static Specification<Book> byCreationDate(String initialDate, String finalDate) {
-    LocalDate start = Optional.ofNullable(initialDate).map(LocalDate::parse).orElse(null);
-    LocalDate end = Optional.ofNullable(finalDate).map(LocalDate::parse).orElse(null);
+    LocalDate startDate = Optional.ofNullable(initialDate).map(LocalDate::parse).orElse(null);
+    LocalDate endDate = Optional.ofNullable(finalDate).map(LocalDate::parse).orElse(null);
 
-    LocalDateTime startTime =
-        Optional.ofNullable(start)
-            .map(item -> LocalDateTime.of(item, LocalTime.MIN))
+    LocalDateTime startDateTime =
+        Optional.ofNullable(startDate)
+            .map(presentInitialDateTime -> LocalDateTime.of(presentInitialDateTime, LocalTime.MIN))
             .orElse(buildMinLocalDateTime());
-    LocalDateTime endTime =
-        Optional.ofNullable(end)
-            .map(item -> LocalDateTime.of(item, LocalTime.MAX))
+    LocalDateTime endDateTime =
+        Optional.ofNullable(endDate)
+            .map(presentFinalDateTime -> LocalDateTime.of(presentFinalDateTime, LocalTime.MAX))
             .orElse(buildMaxLocalDateTime());
 
-    return BookSpecificationSupport.setUpDateCreation(startTime, endTime);
+    return BookSpecificationSupport.setUpDateCreation(startDateTime, endDateTime);
   }
 }
