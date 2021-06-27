@@ -43,14 +43,6 @@ public class LibraryUtils {
     return String.join(COMMA, stringList);
   }
 
-  public static LocalDateTime buildMaxLocalDateTime() {
-    return LocalDateTime.now().plusYears(ONE_THOUSAND);
-  }
-
-  public static LocalDateTime buildMinLocalDateTime() {
-    return LocalDateTime.now().minusYears(ONE_THOUSAND);
-  }
-
   public static String generateSpecificationQueryPattern(String string) {
     return "%" + string.toUpperCase() + "%";
   }

@@ -1,5 +1,6 @@
 package com.lucasbarbosa.libraryapi.repository.specification;
 
+import com.lucasbarbosa.libraryapi.driver.utils.DateUtils;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import org.springframework.data.jpa.domain.Specification;
@@ -38,11 +39,11 @@ public class BookSpecification extends BookSpecificationSupport {
     LocalDateTime startDateTime =
         Optional.ofNullable(startDate)
             .map(presentInitialDateTime -> LocalDateTime.of(presentInitialDateTime, LocalTime.MIN))
-            .orElse(buildMinLocalDateTime());
+            .orElse(DateUtils.buildMinLocalDateTime());
     LocalDateTime endDateTime =
         Optional.ofNullable(endDate)
             .map(presentFinalDateTime -> LocalDateTime.of(presentFinalDateTime, LocalTime.MAX))
-            .orElse(buildMaxLocalDateTime());
+            .orElse(DateUtils.buildMaxLocalDateTime());
 
     return BookSpecificationSupport.setUpDateCreation(startDateTime, endDateTime);
   }
