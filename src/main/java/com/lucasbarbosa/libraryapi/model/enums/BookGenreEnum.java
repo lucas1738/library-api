@@ -2,6 +2,7 @@ package com.lucasbarbosa.libraryapi.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
 
@@ -18,16 +19,16 @@ public enum BookGenreEnum {
 
   @Getter private String initial;
 
-  public static BookGenreEnum findByLiteral(String initial) {
+  public static BookGenreEnum findByLiteral(String literal) {
     return Arrays.stream(BookGenreEnum.values())
-        .filter(bookGenre -> initial.equalsIgnoreCase(bookGenre.toString()))
+        .filter(bookGenre -> bookGenre.toString().equalsIgnoreCase(literal))
         .findAny()
         .orElse(null);
   }
 
   public static BookGenreEnum findByInitial(String initial) {
     return Arrays.stream(BookGenreEnum.values())
-        .filter(bookGenre -> initial.equalsIgnoreCase(bookGenre.getInitial()))
+        .filter(bookGenre -> bookGenre.getInitial().equalsIgnoreCase(initial))
         .findAny()
         .orElse(null);
   }

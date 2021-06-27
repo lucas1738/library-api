@@ -8,17 +8,17 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class Error {
+public class ErrorMessage {
 
     @Getter
     private final List<String> errors;
 
-    public Error(BindingResult bindingResult) {
+    public ErrorMessage(BindingResult bindingResult) {
         this.errors = new ArrayList<>();
         bindingResult.getAllErrors().stream().map(DefaultMessageSourceResolvable::getDefaultMessage).forEach(this.errors::add);
     }
 
-    public Error(String message) {
+    public ErrorMessage(String message) {
         this.errors = Collections.singletonList(message);
     }
 }

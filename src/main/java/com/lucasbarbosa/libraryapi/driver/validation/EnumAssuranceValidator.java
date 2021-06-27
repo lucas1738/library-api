@@ -5,7 +5,6 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.*;
-import static java.util.stream.Collectors.toList;
 
 public class EnumAssuranceValidator implements ConstraintValidator<EnumAssurance, CharSequence> {
   private List<String> allowedValues;
@@ -13,13 +12,12 @@ public class EnumAssuranceValidator implements ConstraintValidator<EnumAssurance
 
   @Override
   public void initialize(EnumAssurance constraintAnnotation) {
-    allowedValues = convertEnumToStringStream(constraintAnnotation.enumClass()).collect(toList());
+    allowedValues = convertEnumToStringList(constraintAnnotation.enumClass());
     field = constraintAnnotation.field();
   }
 
   private String createConstraintViolationMessage() {
-    return String.format(
-        getEnumAssuranceMessage(), field, joinStringStreamByComma(allowedValues.stream()));
+    return String.format(getEnumAssuranceMessage(), field, joinStringListByComma(allowedValues));
   }
 
   @Override

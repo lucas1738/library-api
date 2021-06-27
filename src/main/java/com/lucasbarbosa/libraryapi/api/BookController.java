@@ -6,8 +6,10 @@ import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
+import com.lucasbarbosa.libraryapi.repository.specification.BookSpecification;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -38,8 +40,61 @@ public class BookController {
             message = "Fetched all books sucessfully",
             response = BookResponseDTO.class)
       })
-  public List<BookResponseDTO> fetchBooks() {
-    return this.bookRepository.findAll().stream()
+  @ApiImplicitParams({
+    @ApiImplicitParam(
+        name = "title",
+        value = "Book Title",
+        required = false,
+        dataType = "string",
+        paramType = "query"),
+    @ApiImplicitParam(
+        name = "author",
+        value = "Book Author",
+        required = false,
+        dataType = "string",
+        paramType = "query"),
+    @ApiImplicitParam(
+        name = "bookGenre",
+        value = "Book Genre",
+        allowableValues =
+            "ACTION,"
+                + "COMEDY,"
+                + "DRAMA,"
+                + "FANTASY,"
+                + "HORROR,"
+                + "MYSTERY,"
+                + "ROMANCE,"
+                + "THRILLER",
+        required = false,
+        dataTypeClass = BookGenreEnum.class,
+        paramType = "query"),
+    @ApiImplicitParam(
+        name = "initialDate",
+        value = "Initial Creation Date",
+        required = false,
+        dataType = "string",
+        paramType = "query"),
+    @ApiImplicitParam(
+        name = "finalDate",
+        value = "Final Creation Date",
+        required = false,
+        dataType = "string",
+        paramType = "query"),
+  })
+  public List<BookResponseDTO> fetchBooks(
+      @RequestParam(name = "title", required = false) String title,
+      @RequestParam(name = "author", required = false) String author,
+      @RequestParam(name = "bookGenre", required = false) String bookGenre,
+      @RequestParam(name = "initialDate", required = false) String initialDate,
+      @RequestParam(name = "finalDate", required = false) String finalDate) {
+
+    Specification<Book> specificationFilter =
+        Specification.where(BookSpecification.byAuthor(author))
+            .and(BookSpecification.byTitle(title))
+            .and(BookSpecification.byBookGenre(bookGenre))
+            .and(BookSpecification.byCreationDate(initialDate, finalDate));
+
+    return this.bookRepository.findAll(specificationFilter).stream()
         .sorted(comparing(Book::getAuthor).thenComparing(Book::getTitle))
         .map(BookResponseDTO::of)
         .collect(toList());
@@ -50,14 +105,6 @@ public class BookController {
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiOperation(value = "API responsible for registering books")
-  @ApiImplicitParams({
-    @ApiImplicitParam(
-        name = "bookGenre",
-        value = "Book Genre",
-        required = true,
-        dataType = "String",
-        allowableValues = "first, second, third")
-  })
   @ApiResponses(
       value = {
         @ApiResponse(

@@ -15,6 +15,8 @@ public class ExceptionUtils {
     private static final String ATTRIBUTE_IN_USE = "attribute.in.use";
     private static final String MESSAGE_NOT_READABLE = "message.not.readable";
 
+    public static final int BAD_REQUEST = 400;
+
     public static String getTitleAsConst(){
         return TITLE;
     }
