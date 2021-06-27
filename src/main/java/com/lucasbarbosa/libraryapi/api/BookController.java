@@ -20,6 +20,7 @@ import java.util.List;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.getBookAsConst;
 import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.getTitleAsConst;
+import static com.lucasbarbosa.libraryapi.repository.specification.BookSpecification.*;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
 
@@ -110,12 +111,12 @@ public class BookController {
       @RequestParam(name = "bookMaxPages", required = false) String bookMaxPages) {
 
     Specification<Book> specificationFilter =
-        Specification.where(BookSpecification.byAuthor(author))
-            .and(BookSpecification.byISBN(isbn))
-            .and(BookSpecification.byTitle(title))
-            .and(BookSpecification.byBookGenre(bookGenre))
-            .and(BookSpecification.byCreationDate(initialDate, finalDate))
-            .and(BookSpecification.byNumberPages(bookMinPages, bookMaxPages));
+        Specification.where(byAuthor(author))
+            .and(byISBN(isbn))
+            .and(byTitle(title))
+            .and(byBookGenre(bookGenre))
+            .and(byCreationDate(initialDate, finalDate))
+            .and(byNumberPages(bookMinPages, bookMaxPages));
 
     return this.bookRepository.findAll(specificationFilter).stream()
         .sorted(comparing(Book::getBookGenre).thenComparing(Book::getAuthor))
