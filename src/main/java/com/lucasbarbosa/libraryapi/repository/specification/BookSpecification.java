@@ -1,5 +1,6 @@
 package com.lucasbarbosa.libraryapi.repository.specification;
 
+import com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,6 +10,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.Optional;
 
+import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.*;
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.buildMaxLocalDateTime;
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.buildMinLocalDateTime;
 
@@ -42,5 +44,16 @@ public class BookSpecification extends BookSpecificationSupport {
             .orElse(buildMaxLocalDateTime());
 
     return BookSpecificationSupport.setUpDateCreation(startDateTime, endDateTime);
+  }
+
+  public static Specification<Book> byNumberPages(String minNumberPages, String maxNumberPages) {
+    int minPages =
+        Optional.ofNullable(minNumberPages).map(Integer::parseInt).orElse(ONE);
+    int maxPages =
+        Optional.ofNullable(maxNumberPages)
+            .map(Integer::parseInt)
+            .orElse(ONE_THOUSAND);
+
+    return BookSpecificationSupport.setUpNumberPages(minPages, maxPages);
   }
 }

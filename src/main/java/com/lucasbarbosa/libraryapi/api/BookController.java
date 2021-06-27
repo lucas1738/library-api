@@ -80,22 +80,37 @@ public class BookController {
         required = false,
         dataType = "string",
         paramType = "query"),
+    @ApiImplicitParam(
+        name = "bookMinPages",
+        value = "Minimal Book Number of Pages",
+        required = false,
+        dataType = "string",
+        paramType = "query"),
+    @ApiImplicitParam(
+        name = "bookMaxPages",
+        value = "Maximal Book Number of Pages",
+        required = false,
+        dataType = "string",
+        paramType = "query")
   })
   public List<BookResponseDTO> fetchBooks(
       @RequestParam(name = "title", required = false) String title,
       @RequestParam(name = "author", required = false) String author,
       @RequestParam(name = "bookGenre", required = false) String bookGenre,
       @RequestParam(name = "initialDate", required = false) String initialDate,
-      @RequestParam(name = "finalDate", required = false) String finalDate) {
+      @RequestParam(name = "finalDate", required = false) String finalDate,
+      @RequestParam(name = "bookMinPages", required = false) String bookMinPages,
+      @RequestParam(name = "bookMaxPages", required = false) String bookMaxPages) {
 
     Specification<Book> specificationFilter =
         Specification.where(BookSpecification.byAuthor(author))
             .and(BookSpecification.byTitle(title))
             .and(BookSpecification.byBookGenre(bookGenre))
-            .and(BookSpecification.byCreationDate(initialDate, finalDate));
+            .and(BookSpecification.byCreationDate(initialDate, finalDate))
+            .and(BookSpecification.byNumberPages(bookMinPages, bookMaxPages));
 
     return this.bookRepository.findAll(specificationFilter).stream()
-        .sorted(comparing(Book::getAuthor).thenComparing(Book::getTitle))
+        .sorted(comparing(Book::getBookGenre).thenComparing(Book::getAuthor))
         .map(BookResponseDTO::of)
         .collect(toList());
   }

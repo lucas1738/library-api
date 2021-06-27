@@ -16,7 +16,8 @@ public class LibraryUtils {
 
   private static final String COMMA = ", ";
   private static final String ENUM_ASSURANCE_MESSAGE = "field %s must be any of %s";
-  private static final int ONE_THOUSAND = 1000;
+  public static final int ONE = 1;
+  public static final int ONE_THOUSAND = 1000;
 
   public static String byComma() {
     return COMMA;
