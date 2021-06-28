@@ -4,7 +4,7 @@ import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 
 import java.time.LocalDateTime;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 public class BookTemplate {
 
   public static Book buildDefault() {

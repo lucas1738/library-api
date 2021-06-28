@@ -6,6 +6,7 @@ import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
 import com.lucasbarbosa.libraryapi.service.BookService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.getTitleAs
 import static com.lucasbarbosa.libraryapi.repository.specification.BookSpecification.*;
 import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.toList;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 @Service
+@RequiredArgsConstructor
 public class BookServiceImpl implements BookService {
 
-  @Autowired private BookRepository bookRepository;
+  //  @Autowired
+  private final BookRepository bookRepository;
 
   @Override
   @Transactional

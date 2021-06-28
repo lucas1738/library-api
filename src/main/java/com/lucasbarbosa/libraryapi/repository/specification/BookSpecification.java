@@ -11,7 +11,7 @@ import java.time.LocalTime;
 import java.util.Optional;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.*;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 public class BookSpecification extends BookSpecificationSupport {
 
   public static Specification<Book> byTitle(String title) {

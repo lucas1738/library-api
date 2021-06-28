@@ -7,6 +7,7 @@ import javax.persistence.Converter;
 
 import static com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum.findByInitial;
 
+/** @author Lucas Barbosa on 27/06/2021 */
 @Converter(autoApply = true)
 public class BookGenreEnumCharConverter implements AttributeConverter<BookGenreEnum, String> {
 

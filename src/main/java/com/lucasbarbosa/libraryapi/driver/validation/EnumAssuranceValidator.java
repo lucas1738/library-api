@@ -5,7 +5,7 @@ import javax.validation.ConstraintValidatorContext;
 import java.util.List;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.*;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 public class EnumAssuranceValidator implements ConstraintValidator<EnumAssurance, CharSequence> {
   private List<String> allowedValues;
   private String field;

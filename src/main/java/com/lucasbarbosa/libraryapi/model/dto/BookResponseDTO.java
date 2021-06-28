@@ -7,7 +7,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.function.Function;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.DateUtils.formatDateTime;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 @Getter
 @Setter
 @Builder

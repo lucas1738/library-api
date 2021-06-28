@@ -2,10 +2,9 @@ package com.lucasbarbosa.libraryapi.model.enums;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 @AllArgsConstructor
 public enum BookGenreEnum {
   ACTION("A"),

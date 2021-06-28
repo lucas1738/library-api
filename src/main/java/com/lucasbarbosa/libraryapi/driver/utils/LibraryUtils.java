@@ -4,13 +4,12 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class LibraryUtils {
 

@@ -8,7 +8,7 @@ import org.springframework.data.jpa.domain.Specification;
 import java.time.LocalDateTime;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.generateSpecificationQueryPattern;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 public class BookSpecificationSupport {
 
   protected static Specification<Book> setUpTitle(String title) {

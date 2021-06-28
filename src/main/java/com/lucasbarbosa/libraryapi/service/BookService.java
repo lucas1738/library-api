@@ -5,7 +5,7 @@ import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 
 import java.util.List;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 public interface BookService {
 
   public Book createBook(BookRequestDTO bookRequestDTO);

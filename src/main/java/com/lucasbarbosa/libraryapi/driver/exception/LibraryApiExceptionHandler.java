@@ -16,6 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.*;
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.createEmptyStringArray;
 
+/** @author Lucas Barbosa on 27/06/2021 */
 @RestControllerAdvice
 public class LibraryApiExceptionHandler {
 
@@ -24,8 +25,7 @@ public class LibraryApiExceptionHandler {
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResponse handleValidationExceptions(
-      HttpServletRequest request,
-      MethodArgumentNotValidException ex) {
+      HttpServletRequest request, MethodArgumentNotValidException ex) {
     var errorMessage = new ErrorMessage(ex.getBindingResult());
     return ErrorResponse.ofErrorMessage(request, errorMessage, BAD_REQUEST);
   }
@@ -46,8 +46,7 @@ public class LibraryApiExceptionHandler {
   @ExceptionHandler(HttpMessageNotReadableException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
   public ErrorResponse handleMessageNotReadableException(
-      HttpServletRequest request,
-      HttpMessageNotReadableException ex) {
+      HttpServletRequest request, HttpMessageNotReadableException ex) {
     var errorMessage =
         new ErrorMessage(
             messageSource.getMessage(

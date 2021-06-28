@@ -14,7 +14,7 @@ import java.util.UUID;
 import java.util.function.Function;
 
 import static com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum.findByLiteral;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 @Getter
 @Setter
 @Builder

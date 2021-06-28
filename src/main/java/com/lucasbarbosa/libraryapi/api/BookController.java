@@ -5,6 +5,7 @@ import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import com.lucasbarbosa.libraryapi.service.BookService;
 import io.swagger.annotations.*;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,13 +14,15 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-
+/** @author Lucas Barbosa on 27/06/2021 */
 @RestController
 @RequestMapping("/books")
 @Api(tags = "Book")
+@RequiredArgsConstructor
 public class BookController {
 
-  @Autowired private BookService bookService;
+  //  @Autowired
+  private final BookService bookService;
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiOperation(value = "API responsible for fetching all registered books")
