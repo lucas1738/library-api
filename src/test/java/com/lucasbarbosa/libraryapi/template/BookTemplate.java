@@ -13,8 +13,6 @@ public class BookTemplate {
         .title("Amazing adventures of Sam")
         .author("HP Lovecraft")
         .numberPages(500)
-        .creationDate(LocalDateTime.now())
-        .updateDate(LocalDateTime.now())
         .build();
   }
 }

@@ -2,17 +2,24 @@ package com.lucasbarbosa.libraryapi.service;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.AttributeInUseException;
 import com.lucasbarbosa.libraryapi.model.dto.BookRequestDTO;
+import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
+import com.lucasbarbosa.libraryapi.model.entity.Book_;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
 import com.lucasbarbosa.libraryapi.service.impl.BookServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
+import org.springframework.data.jpa.domain.Specification;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Optional;
 
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.when;
 
 /*
@@ -32,9 +39,13 @@ class BookServiceTestSupport {
 
   @Mock protected BookService service;
 
+  Specification<Book> specification;
+
   protected Book book;
 
   protected BookRequestDTO bookRequestDTO;
+
+  protected BookResponseDTO bookResponseDTO;
 
   @BeforeEach
   void initializeTest() {
@@ -42,8 +53,10 @@ class BookServiceTestSupport {
     service = new BookServiceImpl(repository);
   }
 
-  protected void setUpScenario(Book book, BookRequestDTO bookRequestDTO) {
+  protected void setUpTestProbes(
+      Book book, BookRequestDTO bookRequestDTO, BookResponseDTO bookResponseDTO) {
     this.book = book;
+    this.bookResponseDTO = bookResponseDTO;
     this.bookRequestDTO = bookRequestDTO;
   }
 
@@ -55,7 +68,21 @@ class BookServiceTestSupport {
         });
   }
 
-  protected void mockTestSubject() {
-    when(repository.findByTitleIgnoreCase(Mockito.anyString())).thenReturn(Optional.of(book));
+  private List<BookResponseDTO> retrieveMockedFetchBooks() {
+    return service.fetchBooks(null, null, null, null, null, null, null, null);
+  }
+
+  protected void assertThatListOfBookResponseDTOIsReturned() {
+    assertThat(retrieveMockedFetchBooks())
+        .usingElementComparatorIgnoringFields(Book_.CREATION_DATE, Book_.UPDATE_DATE, Book_.ISBN)
+        .isEqualTo(Collections.singletonList(bookResponseDTO));
+  }
+
+  protected void mockRepositoryFindAll() {
+    when(repository.findAll(any(Specification.class))).thenReturn(Collections.singletonList(book));
+  }
+
+  protected void mockRepositoryFindByTitleIgnoreCase() {
+    when(repository.findByTitleIgnoreCase(anyString())).thenReturn(Optional.of(book));
   }
 }

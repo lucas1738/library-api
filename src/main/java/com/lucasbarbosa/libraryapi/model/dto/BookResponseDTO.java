@@ -23,7 +23,7 @@ public class BookResponseDTO {
 
   private int numberPages;
 
-  private String genre;
+  private String bookGenre;
 
   private String creationDate;
 
@@ -39,7 +39,7 @@ public class BookResponseDTO {
               .isbn(book.getIsbn())
               .title(book.getTitle())
               .author(book.getAuthor())
-              .genre(StringUtils.capitalize(book.getBookGenre().toString().toLowerCase()))
+              .bookGenre(StringUtils.capitalize(book.getBookGenre().toString().toLowerCase()))
               .numberPages(book.getNumberPages())
               .creationDate(formatDateTime(book.getCreationDate()))
               .updateDate(formatDateTime(book.getUpdateDate()))
