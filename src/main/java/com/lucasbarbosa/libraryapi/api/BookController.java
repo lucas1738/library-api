@@ -6,7 +6,6 @@ import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import com.lucasbarbosa.libraryapi.service.BookService;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -80,14 +79,8 @@ public class BookController {
         dataType = "string",
         paramType = "query"),
     @ApiImplicitParam(
-        name = "bookMinPages",
-        value = "Minimal Book Number of Pages",
-        required = false,
-        dataType = "string",
-        paramType = "query"),
-    @ApiImplicitParam(
         name = "bookMaxPages",
-        value = "Maximal Book Number of Pages",
+        value = "Max Book Number of Pages",
         required = false,
         dataType = "string",
         paramType = "query")
@@ -99,12 +92,11 @@ public class BookController {
       @RequestParam(name = "bookGenre", required = false) String bookGenre,
       @RequestParam(name = "initialDate", required = false) String initialDate,
       @RequestParam(name = "finalDate", required = false) String finalDate,
-      @RequestParam(name = "bookMinPages", required = false) String bookMinPages,
       @RequestParam(name = "bookMaxPages", required = false) String bookMaxPages) {
 
     var books =
         bookService.fetchBooks(
-            isbn, title, author, bookGenre, initialDate, finalDate, bookMinPages, bookMaxPages);
+            isbn, title, author, bookGenre, initialDate, finalDate, bookMaxPages);
 
     return ResponseEntity.ok(books);
   }

@@ -17,12 +17,12 @@ public class BookRequestDTOTemplate {
         .build();
   }
 
-  public static BookRequestDTO buildWithUnsuitableBookGenre() {
+  public static BookRequestDTO buildWithUnsuitableBookGenreAndExcessiveNumberPages() {
     return BookRequestDTO.builder()
         .bookGenre(UUID.randomUUID().toString())
         .title("Amazing adventures of Sam")
         .author("HP Lovecraft")
-        .numberPages(500)
+        .numberPages(1500)
         .build();
   }
 
@@ -32,6 +32,15 @@ public class BookRequestDTOTemplate {
         .title(null)
         .author(StringUtils.EMPTY)
         .numberPages(500)
+        .build();
+  }
+
+  public static BookRequestDTO buildWithZeroNumberPagesAndEmptyTitle() {
+    return BookRequestDTO.builder()
+        .bookGenre("action")
+        .title(StringUtils.EMPTY)
+        .author("HP Lovecraft")
+        .numberPages(0)
         .build();
   }
 }

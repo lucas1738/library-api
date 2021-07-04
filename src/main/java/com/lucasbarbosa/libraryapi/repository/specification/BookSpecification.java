@@ -48,10 +48,9 @@ public class BookSpecification extends BookSpecificationSupport {
     return BookSpecificationSupport.setUpDateCreation(startDateTime, endDateTime);
   }
 
-  public static Specification<Book> byNumberPages(String minNumberPages, String maxNumberPages) {
-    int minPages = Optional.ofNullable(minNumberPages).map(Integer::parseInt).orElse(ONE);
+  public static Specification<Book> byNumberPages(String maxNumberPages) {
     int maxPages = Optional.ofNullable(maxNumberPages).map(Integer::parseInt).orElse(ONE_THOUSAND);
 
-    return BookSpecificationSupport.setUpNumberPages(minPages, maxPages);
+    return BookSpecificationSupport.setUpNumberPages(maxPages);
   }
 }

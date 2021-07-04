@@ -34,8 +34,8 @@ public class BookSpecificationSupport {
     return (root, query, cb) -> cb.between(root.get(Book_.CREATION_DATE), initialDate, finalDate);
   }
 
-  public static Specification<Book> setUpNumberPages(int minPagesNumber, int maxNumberPages) {
+  public static Specification<Book> setUpNumberPages(int maxNumberPages) {
     return (root, query, cb) ->
-        cb.between(root.get(Book_.NUMBER_PAGES), minPagesNumber, maxNumberPages);
+        cb.lessThanOrEqualTo(root.get(Book_.NUMBER_PAGES), maxNumberPages);
   }
 }

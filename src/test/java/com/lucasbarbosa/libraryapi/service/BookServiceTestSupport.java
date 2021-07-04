@@ -69,7 +69,7 @@ class BookServiceTestSupport {
   }
 
   private List<BookResponseDTO> retrieveMockedFetchBooks() {
-    return service.fetchBooks(null, null, null, null, null, null, null, null);
+    return service.fetchBooks(null, null, null, null, null, null, null);
   }
 
   protected void assertThatListOfBookResponseDTOIsReturned() {

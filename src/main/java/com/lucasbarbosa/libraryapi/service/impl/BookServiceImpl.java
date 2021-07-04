@@ -7,7 +7,6 @@ import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
 import com.lucasbarbosa.libraryapi.service.BookService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
@@ -48,7 +47,6 @@ public class BookServiceImpl implements BookService {
       String bookGenre,
       String initialDate,
       String finalDate,
-      String bookMinPages,
       String bookMaxPages) {
     Specification<Book> specificationFilter =
         Specification.where(byAuthor(author))
@@ -56,7 +54,7 @@ public class BookServiceImpl implements BookService {
             .and(byTitle(title))
             .and(byBookGenre(bookGenre))
             .and(byCreationDate(initialDate, finalDate))
-            .and(byNumberPages(bookMinPages, bookMaxPages));
+            .and(byNumberPages(bookMaxPages));
 
     return this.bookRepository.findAll(specificationFilter).stream()
         .sorted(comparing(Book::getBookGenre).thenComparing(Book::getAuthor))

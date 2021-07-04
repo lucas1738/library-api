@@ -17,6 +17,5 @@ public interface BookService {
       String bookGenre,
       String initialDate,
       String finalDate,
-      String bookMinPages,
       String bookMaxPages);
 }
