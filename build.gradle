@@ -9,6 +9,7 @@ version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '11'
 
 apply plugin: 'java'
+apply plugin: 'scala'
 
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
@@ -53,3 +54,39 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+sourceSets {
+    unitTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/test/java/com.lucasbarbosa.libraryapi/service')
+        }
+    }
+    contractTest {
+        java {
+            compileClasspath += main.output + test.output
+            runtimeClasspath += main.output + test.output
+            srcDir file('src/test/java/com.lucasbarbosa.libraryapi/controller')
+        }
+    }
+}
+
+task contractTest(type: Test) {
+    testClassesDirs = sourceSets.contractTest.output.classesDirs
+    classpath = sourceSets.contractTest.runtimeClasspath
+    testLogging {
+
+        events 'passed', 'skipped', 'failed'
+    }
+}
+task unitTest(type: Test) {
+    testClassesDirs = sourceSets.unitTest.output.classesDirs
+    classpath = sourceSets.unitTest.runtimeClasspath
+    testLogging {
+
+        events 'passed', 'skipped', 'failed'
+    }
+}
+
+
