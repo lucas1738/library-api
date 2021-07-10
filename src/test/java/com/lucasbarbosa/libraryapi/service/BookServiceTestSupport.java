@@ -39,8 +39,6 @@ class BookServiceTestSupport {
 
   @Mock protected BookService service;
 
-  Specification<Book> specification;
-
   protected Book book;
 
   protected BookRequestDTO bookRequestDTO;
