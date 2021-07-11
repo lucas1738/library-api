@@ -18,6 +18,9 @@ configurations {
     compileOnly {
         extendsFrom annotationProcessor
     }
+
+    contractTestImplementation.extendsFrom testImplementation
+    contractTestRuntimeOnly.extendsFrom testRunTimeOnly
 }
 
 repositories {
@@ -25,8 +28,6 @@ repositories {
 }
 
 dependencies {
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.8.9'
-    implementation 'io.vertx:vertx-core:3.5.3'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation('org.springframework.boot:spring-boot-starter-webflux')
     implementation('org.springframework.boot:spring-boot-starter-cache')
@@ -58,18 +59,12 @@ test {
 }
 
 sourceSets {
-    unitTest {
-        java {
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-            srcDir file('src/test/java/com.lucasbarbosa.libraryapi/service')
-        }
-    }
+
     contractTest {
         java {
+            java.srcDir file('src/contractTest/java')
             compileClasspath += main.output + test.output
             runtimeClasspath += main.output + test.output
-            srcDir file('src/test/java/com.lucasbarbosa.libraryapi/controller')
         }
     }
 }
@@ -77,14 +72,6 @@ sourceSets {
 task contractTest(type: Test) {
     testClassesDirs = sourceSets.contractTest.output.classesDirs
     classpath = sourceSets.contractTest.runtimeClasspath
-    testLogging {
-
-        events 'passed', 'skipped', 'failed'
-    }
-}
-task unitTest(type: Test) {
-    testClassesDirs = sourceSets.unitTest.output.classesDirs
-    classpath = sourceSets.unitTest.runtimeClasspath
     testLogging {
 
         events 'passed', 'skipped', 'failed'
