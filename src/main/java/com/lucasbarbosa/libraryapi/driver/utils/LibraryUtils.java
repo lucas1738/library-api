@@ -1,5 +1,6 @@
 package com.lucasbarbosa.libraryapi.driver.utils;
 
+import com.lucasbarbosa.libraryapi.model.enums.SellerAssuranceMessageType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang3.StringUtils;
@@ -22,7 +23,9 @@ public class LibraryUtils {
     public static final int ONE = 1;
     public static final int ONE_THOUSAND = 1000;
     private static final String ENUM_ASSURANCE_MESSAGE = "field %s must be any of %s";
-    private static final String SELLER_ASSURANCE_MESSAGE = "%s must be %s";
+    private static final String SELLER_ASSURANCE_MESSAGE = "field license_type must be any of INDIVIDUAL, COMPANY";
+    private static final String NOT_NULL_MESSAGE = "payload must not be null";
+    private static final String MANDATORY_MESSAGE = "%s are mandatory";
 
     public static String byComma() {
         return COMMA;
@@ -32,8 +35,17 @@ public class LibraryUtils {
         return ENUM_ASSURANCE_MESSAGE;
     }
 
-    public static String getSellerAssuranceMessage() {
-        return SELLER_ASSURANCE_MESSAGE;
+    public static String getSellerAssuranceMessage(SellerAssuranceMessageType sellerAssuranceMessageType) {
+        switch (sellerAssuranceMessageType) {
+            case PAYLOAD:
+                return NOT_NULL_MESSAGE;
+            case MANDATORY_FIELDS:
+                return MANDATORY_MESSAGE;
+            case UNSUITABLE_ENUM_VALUES:
+                return SELLER_ASSURANCE_MESSAGE;
+            default:
+                return StringUtils.EMPTY;
+        }
     }
 
     public static String[] createEmptyStringArray() {

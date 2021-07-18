@@ -2,6 +2,8 @@ package com.lucasbarbosa.libraryapi.driver.validation;
 
 import com.lucasbarbosa.libraryapi.model.dto.SellerRequestDTO;
 import com.lucasbarbosa.libraryapi.model.enums.LicenseTypeEnum;
+import com.lucasbarbosa.libraryapi.model.enums.SellerAssuranceMessageType;
+import org.apache.commons.lang3.StringUtils;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -16,6 +18,9 @@ import static com.lucasbarbosa.libraryapi.model.enums.LicenseTypeEnum.findByLite
  */
 public class SellerAssuranceValidator implements ConstraintValidator<SellerAssurance, SellerRequestDTO> {
 
+    private static final String INDIVIDUAL_MANDATORY_FIELDS = "cpf and/or person_name";
+    private static final String COMPANY_MANDATORY_FIELDS = "cnpj and/or company_name";
+
     @Override
     public void initialize(SellerAssurance constraintAnnotation) {
         ConstraintValidator.super.initialize(constraintAnnotation);
@@ -25,24 +30,24 @@ public class SellerAssuranceValidator implements ConstraintValidator<SellerAssur
     public boolean isValid(SellerRequestDTO sellerRequestDTO, ConstraintValidatorContext context) {
 
         if (Optional.ofNullable(sellerRequestDTO).map(SellerRequestDTO::getLicenseType).isEmpty()) {
-            handleConstraintViolation(context, "payload", "different than null");
+            handleConstraintViolation(context, SellerAssuranceMessageType.PAYLOAD, StringUtils.EMPTY);
             return false;
         }
 
         if (!convertEnumToStringList(LicenseTypeEnum.class).contains(sellerRequestDTO.getLicenseType().toUpperCase())) {
-            handleConstraintViolation(context, "license_type", "any of INDIVIDUAL, COMPANY");
+            handleConstraintViolation(context, SellerAssuranceMessageType.UNSUITABLE_ENUM_VALUES, StringUtils.EMPTY);
             return false;
         }
 
         var licenseType = findByLiteral(sellerRequestDTO.getLicenseType());
 
         if (LicenseTypeEnum.INDIVIDUAL.equals(licenseType)) {
-            handleConstraintViolation(context, "cpf and person_name", "filled");
+            handleConstraintViolation(context, SellerAssuranceMessageType.MANDATORY_FIELDS, INDIVIDUAL_MANDATORY_FIELDS);
             return hasNulls(List.of(sellerRequestDTO.getCpf(), sellerRequestDTO.getPersonName()));
         }
 
         if (LicenseTypeEnum.COMPANY.equals(licenseType)) {
-            handleConstraintViolation(context, "cnpj and company_name", "filled");
+            handleConstraintViolation(context, SellerAssuranceMessageType.MANDATORY_FIELDS, COMPANY_MANDATORY_FIELDS);
             return hasNulls(List.of(sellerRequestDTO.getCnpj(), sellerRequestDTO.getCompanyName()));
         }
 
@@ -50,15 +55,15 @@ public class SellerAssuranceValidator implements ConstraintValidator<SellerAssur
         return true;
     }
 
-    private void handleConstraintViolation(ConstraintValidatorContext context, String field, String message) {
+    private void handleConstraintViolation(ConstraintValidatorContext context, SellerAssuranceMessageType sellerAssuranceMessageType, String message) {
         context.disableDefaultConstraintViolation();
         context
-                .buildConstraintViolationWithTemplate(createConstraintViolationMessage(field, message))
+                .buildConstraintViolationWithTemplate(createConstraintViolationMessage(sellerAssuranceMessageType, message))
                 .addConstraintViolation();
     }
 
-    private String createConstraintViolationMessage(String field, String message) {
-        return String.format(getSellerAssuranceMessage(), field, message);
+    private String createConstraintViolationMessage(SellerAssuranceMessageType sellerAssuranceMessageType, String message) {
+        return String.format(getSellerAssuranceMessage(sellerAssuranceMessageType), Optional.ofNullable(message).filter(StringUtils::isNotBlank).map(String::valueOf).orElse(StringUtils.EMPTY));
     }
 
 
