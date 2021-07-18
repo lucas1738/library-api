@@ -1,23 +1,25 @@
 package com.lucasbarbosa.libraryapi.model.dto;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategy;
+import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import lombok.Builder;
 import lombok.Getter;
 
-/** @author Lucas Barbosa on 10/07/2021 */
+/**
+ * @author Lucas Barbosa on 10/07/2021
+ */
 @Getter
 @Builder
-@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SellerRequestDTO {
 
-  private String cpf;
+    private String cpf;
 
-  private String cnpj;
+    private String cnpj;
 
-  private String companyName;
+    private String companyName;
 
-  private String personName;
+    private String personName;
 
-  private String licenseType;
+    private String licenseType;
 }

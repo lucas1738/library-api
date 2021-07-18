@@ -19,8 +19,6 @@ configurations {
         extendsFrom annotationProcessor
     }
 
-    contractTestImplementation.extendsFrom testImplementation
-    contractTestRuntimeOnly.extendsFrom testRunTimeOnly
 }
 
 repositories {
@@ -58,24 +56,8 @@ test {
     useJUnitPlatform()
 }
 
-sourceSets {
 
-    contractTest {
-        java {
-            java.srcDir file('src/contractTest/java')
-            compileClasspath += main.output + test.output
-            runtimeClasspath += main.output + test.output
-        }
-    }
-}
 
-task contractTest(type: Test) {
-    testClassesDirs = sourceSets.contractTest.output.classesDirs
-    classpath = sourceSets.contractTest.runtimeClasspath
-    testLogging {
 
-        events 'passed', 'skipped', 'failed'
-    }
-}
 
 
