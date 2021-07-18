@@ -2,6 +2,7 @@ package com.lucasbarbosa.libraryapi.model.dto;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
+import com.lucasbarbosa.libraryapi.driver.validation.SellerAssurance;
 import lombok.Builder;
 import lombok.Getter;
 
@@ -10,6 +11,7 @@ import lombok.Getter;
  */
 @Getter
 @Builder
+@SellerAssurance
 @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
 public class SellerRequestDTO {
 
@@ -22,4 +24,5 @@ public class SellerRequestDTO {
     private String personName;
 
     private String licenseType;
+
 }
