@@ -10,7 +10,9 @@ import java.util.Collections;
 public class ExceptionUtils {
 
   private static final String BOOK = "book";
+  private static final String SELLER = "seller";
   private static final String TITLE = "title";
+  private static final String INFO = "with given value(s)";
 
   private static final String ATTRIBUTE_IN_USE = "attribute.in.use";
   private static final String MESSAGE_NOT_READABLE = "message.not.readable";
@@ -23,6 +25,14 @@ public class ExceptionUtils {
 
   public static String getBookAsConst() {
     return BOOK;
+  }
+
+  public static String getSellerAsConst() {
+    return SELLER;
+  }
+
+  public static String getInfoAsConst() {
+    return INFO;
   }
 
   public static String getAttributeInUseReference() {

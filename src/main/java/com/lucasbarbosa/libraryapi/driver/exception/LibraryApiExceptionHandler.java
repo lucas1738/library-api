@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.ConstraintViolationException;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.*;
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.createEmptyStringArray;
@@ -27,6 +28,14 @@ public class LibraryApiExceptionHandler {
   public ErrorResponse handleValidationExceptions(
       HttpServletRequest request, MethodArgumentNotValidException ex) {
     var errorMessage = new ErrorMessage(ex.getBindingResult());
+    return ErrorResponse.ofErrorMessage(request, errorMessage, BAD_REQUEST);
+  }
+
+  @ExceptionHandler(ConstraintViolationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ErrorResponse handleValidationExceptions(
+      HttpServletRequest request, ConstraintViolationException ex) {
+    var errorMessage = new ErrorMessage(ex.getConstraintViolations());
     return ErrorResponse.ofErrorMessage(request, errorMessage, BAD_REQUEST);
   }
 

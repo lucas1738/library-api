@@ -19,7 +19,7 @@ public @interface EnumAssurance {
 
   Class<? extends Enum<?>> enumClass();
 
-  String field() default StringUtils.EMPTY;
+  String field();
 
   String message() default StringUtils.EMPTY;
 

@@ -13,3 +13,7 @@ spring:
     username: lucasbarbosa
     password: lucas123
     driverClassName: org.postgresql.Driver
+
+seller:
+  token:
+    validity: 60

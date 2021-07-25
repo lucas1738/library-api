@@ -36,19 +36,16 @@ public class BookController {
     @ApiImplicitParam(
         name = "isbn",
         value = "International Standard Book Number",
-        required = false,
         dataType = "string",
         paramType = "query"),
     @ApiImplicitParam(
         name = "title",
         value = "Book Title",
-        required = false,
         dataType = "string",
         paramType = "query"),
     @ApiImplicitParam(
         name = "author",
         value = "Book Author",
-        required = false,
         dataType = "string",
         paramType = "query"),
     @ApiImplicitParam(
@@ -63,25 +60,21 @@ public class BookController {
                 + "MYSTERY,"
                 + "ROMANCE,"
                 + "THRILLER",
-        required = false,
         dataTypeClass = BookGenreEnum.class,
         paramType = "query"),
     @ApiImplicitParam(
         name = "initialDate",
         value = "Initial Creation Date",
-        required = false,
         dataType = "string",
         paramType = "query"),
     @ApiImplicitParam(
         name = "finalDate",
         value = "Final Creation Date",
-        required = false,
         dataType = "string",
         paramType = "query"),
     @ApiImplicitParam(
         name = "bookMaxPages",
         value = "Max Book Number of Pages",
-        required = false,
         dataType = "string",
         paramType = "query")
   })
