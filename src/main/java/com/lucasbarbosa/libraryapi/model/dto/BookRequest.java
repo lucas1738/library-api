@@ -42,11 +42,11 @@ public class BookRequest {
   @NotEmpty(message = "bookGenre must not be empty or null")
   private String bookGenre;
 
-  public static Book toDomain(BookRequestDTO bookRequestDTO) {
+  public static Book toDomain(BookRequest bookRequestDTO) {
     return assemble.apply(bookRequestDTO);
   }
 
-  private static Function<BookRequestDTO, Book> assemble =
+  private static Function<BookRequest, Book> assemble =
       dto ->
           Book.builder()
               .isbn(UUID.randomUUID().toString())

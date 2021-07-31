@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.feign.country;
+package com.lucasbarbosa.libraryapi.feign.restcountry;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

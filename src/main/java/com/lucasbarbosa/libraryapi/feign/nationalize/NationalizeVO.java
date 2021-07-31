@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.feign.country;
+package com.lucasbarbosa.libraryapi.feign.nationalize;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -7,13 +7,11 @@ import lombok.NoArgsConstructor;
 
 /** @author Lucas Barbosa on 31/07/2021 */
 @Builder
-@NoArgsConstructor
-@AllArgsConstructor
 @Getter
-public class LanguageVO {
+@AllArgsConstructor
+@NoArgsConstructor
+public class NationalizeVO {
 
-  private String iso639_1;
-  private String iso639_2;
   private String name;
-  private String nativeName;
+
 }

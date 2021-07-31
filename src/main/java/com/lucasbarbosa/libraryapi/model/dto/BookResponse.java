@@ -29,13 +29,13 @@ public class BookResponse {
 
   private String updateDate;
 
-  public static BookResponseDTO of(Book book) {
+  public static BookResponse of(Book book) {
     return disassemble.apply(book);
   }
 
-  private static Function<Book, BookResponseDTO> disassemble =
+  private static Function<Book, BookResponse> disassemble =
       book ->
-          BookResponseDTO.builder()
+          BookResponse.builder()
               .isbn(book.getIsbn())
               .title(book.getTitle())
               .author(book.getAuthor())

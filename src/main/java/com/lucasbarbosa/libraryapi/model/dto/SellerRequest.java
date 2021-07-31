@@ -45,7 +45,7 @@ public class SellerRequest {
       allowableValues = "INDIVIDUAL, COMPANY")
   private String licenseType;
 
-  public static Seller toDomain(SellerRequestDTO sellerRequestDTO) {
+  public static Seller toDomain(SellerRequest sellerRequestDTO) {
     return assemble.apply(sellerRequestDTO);
   }
 
@@ -53,7 +53,7 @@ public class SellerRequest {
     return UUID.randomUUID().toString().substring(0, 8);
   }
 
-  public static String retriveSellerDescription(SellerRequestDTO sellerRequestDTO) {
+  public static String retriveSellerDescription(SellerRequest sellerRequestDTO) {
     switch (retriveLicenseType(sellerRequestDTO)) {
       case COMPANY:
         return sellerRequestDTO.getCompanyName();
@@ -64,7 +64,7 @@ public class SellerRequest {
     }
   }
 
-  public static String retriveDocumentNumber(SellerRequestDTO sellerRequestDTO) {
+  public static String retriveDocumentNumber(SellerRequest sellerRequestDTO) {
     switch (retriveLicenseType(sellerRequestDTO)) {
       case COMPANY:
         return handleCustomerCnpj(sellerRequestDTO.getCnpj());
@@ -75,16 +75,16 @@ public class SellerRequest {
     }
   }
 
-  private static LicenseTypeEnum retriveLicenseType(SellerRequestDTO sellerRequestDTO) {
+  private static LicenseTypeEnum retriveLicenseType(SellerRequest sellerRequestDTO) {
     return LicenseTypeEnum.findByLiteral(sellerRequestDTO.getLicenseType());
   }
 
-  private static Function<SellerRequestDTO, Seller> assemble =
+  private static Function<SellerRequest, Seller> assemble =
       dto ->
           Seller.builder()
               .id(UUID.randomUUID().toString())
-              .key(SellerRequestDTO.generateToken())
-              .documentNumber(SellerRequestDTO.retriveDocumentNumber(dto))
-              .description(SellerRequestDTO.retriveSellerDescription(dto))
+              .key(SellerRequest.generateToken())
+              .documentNumber(SellerRequest.retriveDocumentNumber(dto))
+              .description(SellerRequest.retriveSellerDescription(dto))
               .build();
 }

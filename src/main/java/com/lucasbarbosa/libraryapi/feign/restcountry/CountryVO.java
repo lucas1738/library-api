@@ -1,17 +1,11 @@
-package com.lucasbarbosa.libraryapi.feign.country;
+package com.lucasbarbosa.libraryapi.feign.restcountry;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.util.List;
 
 /** @author Lucas Barbosa on 31/07/2021 */
-@Builder
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
 public class CountryVO {
 
   private String name;
