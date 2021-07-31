@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 /** @author Lucas Barbosa on 31/07/2021 */
-@FeignClient(value = "${feign.client.country.name}", url = "${feign.client.country.url}")
+@FeignClient(name = "country", url = "${feign.client.country.url}")
 public interface CountryClient {
 
   @GetMapping("/{code}")

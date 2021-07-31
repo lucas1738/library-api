@@ -1,8 +1,8 @@
 package com.lucasbarbosa.libraryapi.service;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.AttributeInUseException;
-import com.lucasbarbosa.libraryapi.model.dto.BookRequestDTO;
-import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
+import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
+import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.model.entity.Book_;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
@@ -41,9 +41,9 @@ class BookServiceTestSupport {
 
   protected Book book;
 
-  protected BookRequestDTO bookRequestDTO;
+  protected BookRequest bookRequest;
 
-  protected BookResponseDTO bookResponseDTO;
+  protected BookResponse bookResponse;
 
   @BeforeEach
   void initializeTest() {
@@ -52,28 +52,28 @@ class BookServiceTestSupport {
   }
 
   protected void setUpTestProbes(
-      Book book, BookRequestDTO bookRequestDTO, BookResponseDTO bookResponseDTO) {
+      Book book, BookRequest bookRequestDTO, BookResponse bookResponseDTO) {
     this.book = book;
-    this.bookResponseDTO = bookResponseDTO;
-    this.bookRequestDTO = bookRequestDTO;
+    this.bookResponse = bookResponseDTO;
+    this.bookRequest = bookRequestDTO;
   }
 
   protected void assertThatAttributeInUseExceptionIsThrowed() {
     assertThrows(
         AttributeInUseException.class,
         () -> {
-          service.createBook(bookRequestDTO);
+          service.createBook(bookRequest);
         });
   }
 
-  private List<BookResponseDTO> retrieveMockedFetchBooks() {
+  private List<BookResponse> retrieveMockedFetchBooks() {
     return service.fetchBooks(null, null, null, null, null, null, null);
   }
 
-  protected void assertThatListOfBookResponseDTOIsReturned() {
+  protected void assertThatListOfBookResponseIsReturned() {
     assertThat(retrieveMockedFetchBooks())
         .usingElementComparatorIgnoringFields(Book_.CREATION_DATE, Book_.UPDATE_DATE, Book_.ISBN)
-        .isEqualTo(Collections.singletonList(bookResponseDTO));
+        .isEqualTo(Collections.singletonList(bookResponse));
   }
 
   protected void mockRepositoryFindAll() {

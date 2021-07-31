@@ -1,8 +1,8 @@
 package com.lucasbarbosa.libraryapi.service.impl;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.AttributeInUseException;
-import com.lucasbarbosa.libraryapi.model.dto.BookRequestDTO;
-import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
+import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
+import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
 import com.lucasbarbosa.libraryapi.service.BookService;
@@ -28,7 +28,7 @@ public class BookServiceImpl implements BookService {
 
   @Override
   @Transactional
-  public Book createBook(BookRequestDTO bookRequestDTO) {
+  public Book createBook(BookRequest bookRequestDTO) {
     this.bookRepository
         .findByTitleIgnoreCase(bookRequestDTO.getTitle())
         .ifPresent(
@@ -36,11 +36,11 @@ public class BookServiceImpl implements BookService {
               throw new AttributeInUseException(
                   getBookAsConst(), getTitleAsConst(), existingBook.getTitle());
             });
-    return this.bookRepository.save(BookRequestDTO.toDomain(bookRequestDTO));
+    return this.bookRepository.save(BookRequest.toDomain(bookRequestDTO));
   }
 
   @Override
-  public List<BookResponseDTO> fetchBooks(
+  public List<BookResponse> fetchBooks(
       String isbn,
       String title,
       String author,
@@ -58,7 +58,7 @@ public class BookServiceImpl implements BookService {
 
     return this.bookRepository.findAll(specificationFilter).stream()
         .sorted(comparing(Book::getBookGenre).thenComparing(Book::getAuthor))
-        .map(BookResponseDTO::of)
+        .map(BookResponse::of)
         .collect(toList());
   }
 }

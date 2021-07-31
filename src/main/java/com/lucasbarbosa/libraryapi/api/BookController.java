@@ -1,7 +1,7 @@
 package com.lucasbarbosa.libraryapi.api;
 
-import com.lucasbarbosa.libraryapi.model.dto.BookRequestDTO;
-import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
+import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
+import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import com.lucasbarbosa.libraryapi.service.BookService;
 import io.swagger.annotations.*;
@@ -30,7 +30,7 @@ public class BookController {
         @ApiResponse(
             code = 200,
             message = "Fetched all books sucessfully",
-            response = BookResponseDTO.class)
+            response = BookResponse.class)
       })
   @ApiImplicitParams({
     @ApiImplicitParam(
@@ -78,7 +78,7 @@ public class BookController {
         dataType = "string",
         paramType = "query")
   })
-  public ResponseEntity<List<BookResponseDTO>> fetchBooks(
+  public ResponseEntity<List<BookResponse>> fetchBooks(
       @RequestParam(name = "isbn", required = false) String isbn,
       @RequestParam(name = "title", required = false) String title,
       @RequestParam(name = "author", required = false) String author,
@@ -104,12 +104,12 @@ public class BookController {
         @ApiResponse(
             code = 201,
             message = "Book sucessfully registered",
-            response = BookResponseDTO.class),
+            response = BookResponse.class),
         @ApiResponse(code = 400, message = "Error due to incorrect request contract")
       })
-  public ResponseEntity<BookResponseDTO> createBook(
-      @Validated @RequestBody BookRequestDTO bookRequestDTO) {
+  public ResponseEntity<BookResponse> createBook(
+      @Validated @RequestBody BookRequest bookRequestDTO) {
     var book = bookService.createBook(bookRequestDTO);
-    return ResponseEntity.status(HttpStatus.CREATED).body(BookResponseDTO.of(book));
+    return ResponseEntity.status(HttpStatus.CREATED).body(BookResponse.of(book));
   }
 }

@@ -1,12 +1,12 @@
 package com.lucasbarbosa.libraryapi.template;
 
-import com.lucasbarbosa.libraryapi.model.dto.BookResponseDTO;
+import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 
 /** @author Lucas Barbosa on 27/06/2021 */
-public class BookResponseDTOTemplate {
+public class BookResponseTemplate {
 
-  public static BookResponseDTO buildDefault() {
-    return BookResponseDTO.builder()
+  public static BookResponse buildDefault() {
+    return BookResponse.builder()
         .bookGenre("Action")
         .title("Amazing adventures of Sam")
         .author("HP Lovecraft")

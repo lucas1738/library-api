@@ -2,8 +2,8 @@ package com.lucasbarbosa.libraryapi.api;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.AttributeInUseException;
 import com.lucasbarbosa.libraryapi.driver.validation.EnumAssurance;
-import com.lucasbarbosa.libraryapi.model.dto.SellerInfoDTO;
-import com.lucasbarbosa.libraryapi.model.dto.SellerRequestDTO;
+import com.lucasbarbosa.libraryapi.model.dto.SellerInfoResponse;
+import com.lucasbarbosa.libraryapi.model.dto.SellerRequest;
 import com.lucasbarbosa.libraryapi.model.entity.Seller;
 import com.lucasbarbosa.libraryapi.model.enums.SellerInformationTypeEnum;
 import com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum;
@@ -28,8 +28,8 @@ import java.util.Optional;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.*;
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.createEmptyStringArray;
-import static com.lucasbarbosa.libraryapi.model.dto.SellerRequestDTO.retriveDocumentNumber;
-import static com.lucasbarbosa.libraryapi.model.dto.SellerRequestDTO.retriveSellerDescription;
+import static com.lucasbarbosa.libraryapi.model.dto.SellerRequest.retriveDocumentNumber;
+import static com.lucasbarbosa.libraryapi.model.dto.SellerRequest.retriveSellerDescription;
 import static com.lucasbarbosa.libraryapi.model.entity.Seller.remainingTokenValidity;
 import static com.lucasbarbosa.libraryapi.model.enums.SellerInformationTypeEnum.findByLiteral;
 import static com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum.*;
@@ -66,8 +66,8 @@ public class SellerController {
             response = Seller.class),
         @ApiResponse(code = 400, message = "Error due to incorrect request contract")
       })
-  public ResponseEntity<SellerInfoDTO> registerSeller(
-      @Validated @RequestBody SellerRequestDTO sellerRequestDTO) {
+  public ResponseEntity<SellerInfoResponse> registerSeller(
+      @Validated @RequestBody SellerRequest sellerRequestDTO) {
     ExampleMatcher matcher =
         ExampleMatcher.matching()
             .withIgnoreNullValues()
@@ -93,9 +93,9 @@ public class SellerController {
                       retriveDocumentNumber(sellerRequestDTO)));
             });
 
-    var seller = sellerRepository.save(SellerRequestDTO.toDomain(sellerRequestDTO));
+    var seller = sellerRepository.save(SellerRequest.toDomain(sellerRequestDTO));
     var message = retrieveOneParamMessage(TOKEN_KEY_GENERATED, seller.getKey());
-    return buildResponseWithStatusAndBody(CREATED, new SellerInfoDTO(message));
+    return buildResponseWithStatusAndBody(CREATED, new SellerInfoResponse(message));
   }
 
   @GetMapping(value = "/info")
@@ -118,7 +118,7 @@ public class SellerController {
         dataType = "string",
         paramType = "query")
   })
-  public ResponseEntity<SellerInfoDTO> retriveSellerInformation(
+  public ResponseEntity<SellerInfoResponse> retriveSellerInformation(
       @RequestParam(value = "infoType")
           @EnumAssurance(enumClass = SellerInformationTypeEnum.class, field = "infoType")
           String infoType,
@@ -134,7 +134,7 @@ public class SellerController {
             .map(this::buildTokenValidationMessage)
             .orElse(
                 buildResponseWithStatusAndBody(
-                    OK, new SellerInfoDTO(retrieveRawMessage(TOKEN_KEY_INCORRECT))));
+                    OK, new SellerInfoResponse(retrieveRawMessage(TOKEN_KEY_INCORRECT))));
       case TOKEN:
         return Optional.ofNullable(documentNumber)
             .filter(not(ObjectUtils::isEmpty))
@@ -143,33 +143,33 @@ public class SellerController {
                 seller ->
                     buildResponseWithStatusAndBody(
                         OK,
-                        new SellerInfoDTO(
+                        new SellerInfoResponse(
                             retrieveOneParamMessage(TOKEN_KEY_GENERATED, seller.getKey()))))
             .orElse(
                 buildResponseWithStatusAndBody(
-                    OK, new SellerInfoDTO(retrieveRawMessage(TOKEN_DOCUMENT_INCORRECT))));
+                    OK, new SellerInfoResponse(retrieveRawMessage(TOKEN_DOCUMENT_INCORRECT))));
       default:
         return null;
     }
   }
 
-  private ResponseEntity<SellerInfoDTO> buildResponseWithStatusAndBody(
-      HttpStatus status, SellerInfoDTO body) {
+  private ResponseEntity<SellerInfoResponse> buildResponseWithStatusAndBody(
+      HttpStatus status, SellerInfoResponse body) {
     return ResponseEntity.status(status).body(body);
   }
 
-  private ResponseEntity<SellerInfoDTO> buildTokenValidationMessage(int daysRemainning) {
+  private ResponseEntity<SellerInfoResponse> buildTokenValidationMessage(int daysRemainning) {
     return Optional.of(daysRemainning)
         .filter(days -> days > 0)
         .map(
             validPeriod ->
                 buildResponseWithStatusAndBody(
                     OK,
-                    new SellerInfoDTO(
+                    new SellerInfoResponse(
                         retrieveOneParamMessage(TOKEN_KEY_VALIDITY, validPeriod.toString()))))
         .orElse(
             buildResponseWithStatusAndBody(
-                OK, new SellerInfoDTO(retrieveRawMessage(TOKEN_KEY_EXPIRED))));
+                OK, new SellerInfoResponse(retrieveRawMessage(TOKEN_KEY_EXPIRED))));
   }
 
   private String retrieveOneParamMessage(TokenValidationEnum tokenValidationEnum, String param) {

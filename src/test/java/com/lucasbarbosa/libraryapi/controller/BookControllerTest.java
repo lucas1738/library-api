@@ -1,6 +1,6 @@
 package com.lucasbarbosa.libraryapi.controller;
 
-import com.lucasbarbosa.libraryapi.template.BookRequestDTOTemplate;
+import com.lucasbarbosa.libraryapi.template.BookRequestTemplate;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -17,10 +17,10 @@ class BookControllerTest extends BookControllerTestSupport {
       "Given unsuitable bookGenre value, then return BAD REQUEST with field validation message")
   void givenBookGenrerUnallowedValueAndExcessiveNumberPagesThenReturnBadRequest() throws Exception {
 
-    writeAsJson(BookRequestDTOTemplate.buildWithUnsuitableBookGenreAndExcessiveNumberPages());
+    writeAsJson(BookRequestTemplate.buildWithUnsuitableBookGenreAndExcessiveNumberPages());
 
     onBookRegisterFailValidateMultipleMessages(
-            BOOK_GENRE_ENUM_VALIDATION_MESSAGE, NUMBER_PAGES_FIELD_MAX_VALUE_VALIDATION_MESSAGE);
+        BOOK_GENRE_ENUM_VALIDATION_MESSAGE, NUMBER_PAGES_FIELD_MAX_VALUE_VALIDATION_MESSAGE);
   }
 
   @Test
@@ -28,7 +28,7 @@ class BookControllerTest extends BookControllerTestSupport {
       "Given null title and empty author, then return BAD REQUEST with field validation message")
   void givenNullTitleAndEmptyAuthorThenReturnBadRequest() throws Exception {
 
-    writeAsJson(BookRequestDTOTemplate.buildWithNullTitleAndEmptyAuthor());
+    writeAsJson(BookRequestTemplate.buildWithNullTitleAndEmptyAuthor());
 
     onBookRegisterFailValidateMultipleMessages(
         TITLE_FIELD_VALIDATION_MESSAGE, AUTHOR_FIELD_VALIDATION_MESSAGE);
@@ -39,7 +39,7 @@ class BookControllerTest extends BookControllerTestSupport {
       "Given zero number of pages and empty title, then return BAD REQUEST with field validation message")
   void givenZeroNumberOfPagesAndEmptyTitleThenReturnBadRequest() throws Exception {
 
-    writeAsJson(BookRequestDTOTemplate.buildWithZeroNumberPagesAndEmptyTitle());
+    writeAsJson(BookRequestTemplate.buildWithZeroNumberPagesAndEmptyTitle());
 
     onBookRegisterFailValidateMultipleMessages(
         TITLE_FIELD_VALIDATION_MESSAGE, NUMBER_PAGES_FIELD_MIN_VALUE_VALIDATION_MESSAGE);
