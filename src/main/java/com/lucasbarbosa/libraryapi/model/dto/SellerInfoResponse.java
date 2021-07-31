@@ -11,7 +11,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @ApiModel(value = "Data transfer object for returning seller token information")
-public class SellerInfoDTO {
+public class SellerInfoResponse {
 
   @ApiModelProperty(
       value = "Information either about token key or its validity",

@@ -21,7 +21,7 @@ import static com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum.findByLitera
 @AllArgsConstructor
 @NoArgsConstructor
 @ApiModel(value = "BookRequestDTO", description = "Data transfer object for book registration")
-public class BookRequestDTO {
+public class BookRequest {
 
   @ApiModelProperty(value = "Book title", example = "The Adventures of Joe Doe", required = true)
   @NotEmpty(message = "title must not be empty or null")

@@ -13,7 +13,7 @@ import static com.lucasbarbosa.libraryapi.driver.utils.DateUtils.formatDateTime;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class BookResponseDTO {
+public class BookResponse {
 
   private String isbn;
 

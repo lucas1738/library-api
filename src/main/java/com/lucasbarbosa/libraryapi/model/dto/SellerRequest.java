@@ -1,6 +1,6 @@
 package com.lucasbarbosa.libraryapi.model.dto;
 
-import com.fasterxml.jackson.databind.PropertyNamingStrategies;
+import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import com.lucasbarbosa.libraryapi.driver.validation.SellerAssurance;
 import com.lucasbarbosa.libraryapi.model.entity.Seller;
@@ -21,11 +21,11 @@ import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.handleCustom
 @Getter
 @Builder
 @SellerAssurance
-@JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+@JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
 @ApiModel(
     value = "SellerRequestDTO",
     description = "Data transfer object for sellers registration and token acquirence")
-public class SellerRequestDTO {
+public class SellerRequest {
 
   @ApiModelProperty(value = "Seller CPF", example = "021.423.543-65")
   private String cpf;

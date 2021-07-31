@@ -47,7 +47,7 @@ class BookServiceTestSupport {
 
   @BeforeEach
   void initializeTest() {
-    MockitoAnnotations.openMocks(this);
+    MockitoAnnotations.initMocks(this);
     service = new BookServiceImpl(repository);
   }
 
