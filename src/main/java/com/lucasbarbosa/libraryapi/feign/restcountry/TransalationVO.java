@@ -1,15 +1,9 @@
 package com.lucasbarbosa.libraryapi.feign.restcountry;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 /** @author Lucas Barbosa on 31/07/2021 */
 @Getter
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
 public class TransalationVO {
 
   private String de;
