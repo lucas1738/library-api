@@ -9,7 +9,6 @@ import com.lucasbarbosa.libraryapi.model.enums.SellerInformationTypeEnum;
 import com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum;
 import com.lucasbarbosa.libraryapi.repository.SellerRepository;
 import io.swagger.annotations.*;
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
@@ -43,12 +42,16 @@ import static org.springframework.http.HttpStatus.OK;
 @RequestMapping("/seller")
 @Api(tags = "Seller")
 @Validated
-@RequiredArgsConstructor
 public class SellerController {
 
   private final MessageSource messageSource;
 
   private final SellerRepository sellerRepository;
+
+  public SellerController(MessageSource messageSource, SellerRepository sellerRepository) {
+    this.messageSource = messageSource;
+    this.sellerRepository = sellerRepository;
+  }
 
   @Value("${seller.token.validity}")
   private int tokenValidity;

@@ -1,27 +1,43 @@
 package com.lucasbarbosa.libraryapi.api;
 
+import com.lucasbarbosa.libraryapi.integration.productapi.ProductService;
+import com.lucasbarbosa.libraryapi.integration.stockapi.StockService;
 import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
 import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
-import com.lucasbarbosa.libraryapi.service.BookService;
+import com.lucasbarbosa.libraryapi.unit.BookService;
 import io.swagger.annotations.*;
-import lombok.RequiredArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
+import static java.util.concurrent.CompletableFuture.supplyAsync;
+
 /** @author Lucas Barbosa on 27/06/2021 */
 @RestController
 @RequestMapping("/books")
 @Api(tags = "Book")
-@RequiredArgsConstructor
 public class BookController {
 
-  //  @Autowired
   private final BookService bookService;
+
+  private final StockService stockService;
+
+  private final ProductService productService;
+
+  public BookController(
+      BookService bookService, StockService stockService, ProductService productService) {
+    this.bookService = bookService;
+    this.stockService = stockService;
+    this.productService = productService;
+  }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   @ApiOperation(value = "API responsible for fetching all registered books")
@@ -111,5 +127,18 @@ public class BookController {
       @Validated @RequestBody BookRequest bookRequestDTO) {
     var book = bookService.createBook(bookRequestDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(BookResponse.of(book));
+  }
+
+  @SneakyThrows
+  @GetMapping(path = "/sell")
+  @ApiOperation(value = "Test")
+  public ResponseEntity<BigDecimal> testFeign() {
+    CompletableFuture<BigDecimal> priceFuture =
+        supplyAsync(stockService::fetchAvailableStock)
+            .thenCombine(
+                supplyAsync(productService::fetchProductPrice),
+                BigDecimal::multiply);
+
+    return ResponseEntity.ok(priceFuture.get());
   }
 }

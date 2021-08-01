@@ -3,7 +3,6 @@ package com.lucasbarbosa.libraryapi.driver.utils;
 import com.lucasbarbosa.libraryapi.model.enums.SellerAssuranceMessageType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
@@ -12,6 +11,8 @@ import java.util.Optional;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /** @author Lucas Barbosa on 27/06/2021 */
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -44,7 +45,7 @@ public class LibraryUtils {
       case UNSUITABLE_ENUM_VALUES:
         return SELLER_ASSURANCE_MESSAGE;
       default:
-        return StringUtils.EMPTY;
+        return EMPTY;
     }
   }
 
@@ -53,7 +54,7 @@ public class LibraryUtils {
   }
 
   public static String convertObjectToString(Object object) {
-    return Optional.ofNullable(object).map(Objects::toString).orElse(StringUtils.EMPTY);
+    return Optional.ofNullable(object).map(Objects::toString).orElse(EMPTY);
   }
 
   public static List<String> convertEnumToStringList(Class<? extends Enum<?>> enumeration) {
@@ -73,12 +74,10 @@ public class LibraryUtils {
   }
 
   public static String handleCustomerCpf(String cpf) {
-    return cpf.replace(".", StringUtils.EMPTY).replace("-", StringUtils.EMPTY);
+    return cpf.replace(".", EMPTY).replace("-", EMPTY);
   }
 
   public static String handleCustomerCnpj(String cnpj) {
-    return cnpj.replace(".", StringUtils.EMPTY)
-        .replace("-", StringUtils.EMPTY)
-        .replace("/", StringUtils.EMPTY);
+    return cnpj.replace(".", EMPTY).replace("-", EMPTY).replace("/", EMPTY);
   }
 }

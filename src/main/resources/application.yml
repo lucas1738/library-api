@@ -22,15 +22,24 @@ eureka:
 feign:
   client:
     stock:
-      name: Stock
-      url: https://www.randomnumberapi.com/api/v1.0
+      url: http://www.randomnumberapi.com/api/v1.0
     agify:
-      name: Agify
-      url: https://api.agify.io/
+      url: http://api.agify.io/
     country:
-      name: Country
-      url: https://restcountries.eu/rest/v2/alpha
+      url: http://restcountries.eu/rest/v2/alpha
+    product:
+      url: https://random-data-api.com/api/number/random_number
+    user:
+      url: http://random-data-api.com/api
 
 seller:
   token:
     validity: 60
+
+stock:
+  minStock: 1
+  maxStock: 10
+
+product:
+  minPrice: 1
+  maxPrice: 100

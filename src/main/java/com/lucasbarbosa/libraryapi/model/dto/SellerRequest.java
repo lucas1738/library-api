@@ -45,8 +45,8 @@ public class SellerRequest {
       allowableValues = "INDIVIDUAL, COMPANY")
   private String licenseType;
 
-  public static Seller toDomain(SellerRequest sellerRequestDTO) {
-    return assemble.apply(sellerRequestDTO);
+  public static Seller toDomain(SellerRequest sellerRequest) {
+    return assemble.apply(sellerRequest);
   }
 
   private static String generateToken() {
@@ -64,19 +64,19 @@ public class SellerRequest {
     }
   }
 
-  public static String retriveDocumentNumber(SellerRequest sellerRequestDTO) {
-    switch (retriveLicenseType(sellerRequestDTO)) {
+  public static String retriveDocumentNumber(SellerRequest sellerRequest) {
+    switch (retriveLicenseType(sellerRequest)) {
       case COMPANY:
-        return handleCustomerCnpj(sellerRequestDTO.getCnpj());
+        return handleCustomerCnpj(sellerRequest.getCnpj());
       case INDIVIDUAL:
-        return handleCustomerCpf(sellerRequestDTO.getCpf());
+        return handleCustomerCpf(sellerRequest.getCpf());
       default:
         return StringUtils.EMPTY;
     }
   }
 
-  private static LicenseTypeEnum retriveLicenseType(SellerRequest sellerRequestDTO) {
-    return LicenseTypeEnum.findByLiteral(sellerRequestDTO.getLicenseType());
+  private static LicenseTypeEnum retriveLicenseType(SellerRequest sellerRequest) {
+    return LicenseTypeEnum.findByLiteral(sellerRequest.getLicenseType());
   }
 
   private static Function<SellerRequest, Seller> assemble =

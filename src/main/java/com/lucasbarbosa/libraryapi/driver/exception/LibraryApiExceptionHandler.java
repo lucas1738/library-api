@@ -1,7 +1,7 @@
 package com.lucasbarbosa.libraryapi.driver.exception;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.AttributeInUseException;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.lucasbarbosa.libraryapi.driver.exception.custom.FeignIntegrationException;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,24 @@ import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.createEmptyS
 @RestControllerAdvice
 public class LibraryApiExceptionHandler {
 
-  @Autowired private MessageSource messageSource;
+  private final MessageSource messageSource;
+
+  public LibraryApiExceptionHandler(MessageSource messageSource) {
+    this.messageSource = messageSource;
+  }
+
+  @ExceptionHandler(FeignIntegrationException.class)
+  @ResponseStatus(HttpStatus.NOT_FOUND)
+  public ErrorResponse handleFeignIntegrationException(
+      HttpServletRequest request, FeignIntegrationException ex) {
+    var errorMessage =
+        new ErrorMessage(
+            messageSource.getMessage(
+                getFeignIntegration(),
+                buildWithSingleParam(ex.getFirst()),
+                LocaleContextHolder.getLocale()));
+    return ErrorResponse.ofErrorMessage(request, errorMessage, NOT_FOUND);
+  }
 
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
