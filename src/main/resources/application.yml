@@ -39,7 +39,3 @@ seller:
 stock:
   minStock: 1
   maxStock: 10
-
-product:
-  minPrice: 1
-  maxPrice: 100

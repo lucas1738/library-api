@@ -1,10 +1,9 @@
-package com.lucasbarbosa.libraryapi.integration.productapi;
+package com.lucasbarbosa.libraryapi.integration.agifyapi;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.FeignIntegrationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.Optional;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.retrieveExceptionClassName;
@@ -12,26 +11,25 @@ import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.retrieveEx
 /** @author Lucas Barbosa on 01/08/2021 */
 @Service
 @Slf4j
-public class ProductService {
+public class AgifyService {
 
-  private final ProductClient productClient;
+  private final AgifyClient agifyClient;
 
-  public ProductService(ProductClient productClient) {
-    this.productClient = productClient;
+  public AgifyService(AgifyClient agifyClient) {
+    this.agifyClient = agifyClient;
   }
 
-  public Optional<BigDecimal> fetchProductPrice() {
-
+  public Optional<Integer> retrieveCustomerAge(String customerName) {
     try {
-      return Optional.ofNullable(productClient.findProduct())
+      return Optional.ofNullable(agifyClient.findCustomerAge(customerName))
           .map(
-              product -> {
-                log.info("m=fetchProductPrice product={}", product);
-                return product.getDecimal();
+              agifyVO -> {
+                log.info("m=retrieveCustomerAge age={}", agifyVO);
+                return agifyVO.getAge();
               })
           .or(
               () -> {
-                log.warn("m=fetchProductPrice failed");
+                log.warn("m=retrieveCustomerAge failed");
                 return Optional.empty();
               });
     } catch (Exception exception) {

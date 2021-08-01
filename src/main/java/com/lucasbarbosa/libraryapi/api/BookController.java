@@ -11,12 +11,15 @@ import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.math.BigDecimal;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
+import java.util.function.Predicate;
 
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
@@ -137,8 +140,18 @@ public class BookController {
         supplyAsync(stockService::fetchAvailableStock)
             .thenCombine(
                 supplyAsync(productService::fetchProductPrice),
-                BigDecimal::multiply);
+                (stock, price) ->
+                    areAllPresent(List.of(stock, price))
+                        ? stock.get().multiply(price.get())
+                        : null);
 
-    return ResponseEntity.ok(priceFuture.get());
+    return Optional.ofNullable(priceFuture.get())
+        .filter(Predicate.not(ObjectUtils::isEmpty))
+        .map(ResponseEntity::ok)
+        .orElse(ResponseEntity.ok(BigDecimal.ZERO));
+  }
+
+  private boolean areAllPresent(List<Optional<BigDecimal>> optionalList) {
+    return optionalList.stream().allMatch(Optional::isPresent);
   }
 }

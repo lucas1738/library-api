@@ -28,7 +28,7 @@ public class StockService {
     this.stockClient = stockClient;
   }
 
-  public BigDecimal fetchAvailableStock() {
+  public Optional<BigDecimal> fetchAvailableStock() {
     try {
       return Optional.ofNullable(stockClient.getAvalaibleStock(minStock, maxStock))
           .flatMap(stockList -> stockList.stream().filter(Objects::nonNull).findFirst())
@@ -37,10 +37,10 @@ public class StockService {
                 log.info("m=fetchAvailableStock stock={}", stock);
                 return new BigDecimal(stock);
               })
-          .orElseGet(
+          .or(
               () -> {
-                log.warn("m=fetchAvailableStock ");
-                return BigDecimal.ONE;
+                log.warn("m=fetchAvailableStock failed");
+                return Optional.empty();
               });
 
     } catch (Exception exception) {

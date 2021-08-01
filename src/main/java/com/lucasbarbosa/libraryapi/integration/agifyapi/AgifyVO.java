@@ -23,7 +23,6 @@ public class AgifyVO {
   @Override
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-        .append("customerName", name)
         .append("customerAge", age)
         .toString();
   }
