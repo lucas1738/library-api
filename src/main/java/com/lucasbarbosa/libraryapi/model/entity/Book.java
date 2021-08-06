@@ -2,9 +2,7 @@ package com.lucasbarbosa.libraryapi.model.entity;
 
 import com.lucasbarbosa.libraryapi.driver.converter.BookGenreEnumCharConverter;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -12,6 +10,8 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "tb_book")
 public class Book {
