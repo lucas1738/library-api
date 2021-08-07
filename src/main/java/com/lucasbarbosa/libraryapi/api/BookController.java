@@ -1,27 +1,17 @@
 package com.lucasbarbosa.libraryapi.api;
 
-import com.lucasbarbosa.libraryapi.integration.productapi.ProductService;
-import com.lucasbarbosa.libraryapi.integration.stockapi.StockService;
 import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
 import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
-import com.lucasbarbosa.libraryapi.unit.BookService;
+import com.lucasbarbosa.libraryapi.service.BookService;
 import io.swagger.annotations.*;
-import lombok.SneakyThrows;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.CompletableFuture;
-import java.util.function.Predicate;
-
-import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /** @author Lucas Barbosa on 27/06/2021 */
 @RestController
@@ -31,19 +21,12 @@ public class BookController {
 
   private final BookService bookService;
 
-  private final StockService stockService;
-
-  private final ProductService productService;
-
-  public BookController(
-      BookService bookService, StockService stockService, ProductService productService) {
+  public BookController(BookService bookService) {
     this.bookService = bookService;
-    this.stockService = stockService;
-    this.productService = productService;
   }
 
   @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
-  @ApiOperation(value = "API responsible for fetching all registered books")
+  @ApiOperation(value = "Resource responsible for fetching all registered books")
   @ApiResponses(
       value = {
         @ApiResponse(
@@ -117,7 +100,7 @@ public class BookController {
       path = "/register",
       consumes = MediaType.APPLICATION_JSON_VALUE,
       produces = MediaType.APPLICATION_JSON_VALUE)
-  @ApiOperation(value = "API responsible for registering books")
+  @ApiOperation(value = "Resource responsible for registering books")
   @ApiResponses(
       value = {
         @ApiResponse(
@@ -130,28 +113,5 @@ public class BookController {
       @Validated @RequestBody BookRequest bookRequestDTO) {
     var book = bookService.createBook(bookRequestDTO);
     return ResponseEntity.status(HttpStatus.CREATED).body(BookResponse.of(book));
-  }
-
-  @SneakyThrows
-  @GetMapping(path = "/sell")
-  @ApiOperation(value = "Test")
-  public ResponseEntity<BigDecimal> testFeign() {
-    CompletableFuture<BigDecimal> priceFuture =
-        supplyAsync(stockService::fetchAvailableStock)
-            .thenCombine(
-                supplyAsync(productService::fetchProductPrice),
-                (stock, price) ->
-                    areAllPresent(List.of(stock, price))
-                        ? stock.get().multiply(price.get())
-                        : null);
-
-    return Optional.ofNullable(priceFuture.get())
-        .filter(Predicate.not(ObjectUtils::isEmpty))
-        .map(ResponseEntity::ok)
-        .orElse(ResponseEntity.ok(BigDecimal.ZERO));
-  }
-
-  private boolean areAllPresent(List<Optional<BigDecimal>> optionalList) {
-    return optionalList.stream().allMatch(Optional::isPresent);
   }
 }

@@ -1,11 +1,11 @@
-package com.lucasbarbosa.libraryapi.unit.impl;
+package com.lucasbarbosa.libraryapi.service.impl;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.AttributeInUseException;
 import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
 import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
-import com.lucasbarbosa.libraryapi.unit.BookService;
+import com.lucasbarbosa.libraryapi.service.BookService;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 

@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.unit;
+package com.lucasbarbosa.libraryapi.service;
 
 import com.lucasbarbosa.libraryapi.template.BookRequestTemplate;
 import com.lucasbarbosa.libraryapi.template.BookResponseTemplate;

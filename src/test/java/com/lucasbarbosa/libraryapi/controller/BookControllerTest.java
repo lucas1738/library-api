@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.contract;
+package com.lucasbarbosa.libraryapi.controller;
 
 import com.lucasbarbosa.libraryapi.template.BookRequestTemplate;
 import org.junit.jupiter.api.DisplayName;

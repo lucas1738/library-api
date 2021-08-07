@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.unit;
+package com.lucasbarbosa.libraryapi.service;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.AttributeInUseException;
 import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
@@ -6,7 +6,7 @@ import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
 import com.lucasbarbosa.libraryapi.model.entity.Book_;
 import com.lucasbarbosa.libraryapi.repository.BookRepository;
-import com.lucasbarbosa.libraryapi.unit.impl.BookServiceImpl;
+import com.lucasbarbosa.libraryapi.service.impl.BookServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;

@@ -6,12 +6,8 @@ import com.lucasbarbosa.libraryapi.model.dto.SellerInfoResponse;
 import com.lucasbarbosa.libraryapi.model.dto.SellerRequest;
 import com.lucasbarbosa.libraryapi.model.entity.Seller;
 import com.lucasbarbosa.libraryapi.model.enums.SellerInformationTypeEnum;
-import com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum;
-import com.lucasbarbosa.libraryapi.repository.SellerRepository;
+import com.lucasbarbosa.libraryapi.service.SellerService;
 import io.swagger.annotations.*;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.context.MessageSource;
-import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
@@ -19,23 +15,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.ObjectUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.*;
-import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.createEmptyStringArray;
+import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.getInfoAsConst;
+import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.getSellerAsConst;
 import static com.lucasbarbosa.libraryapi.model.dto.SellerRequest.retriveDocumentNumber;
 import static com.lucasbarbosa.libraryapi.model.dto.SellerRequest.retriveSellerDescription;
-import static com.lucasbarbosa.libraryapi.model.entity.Seller.remainingTokenValidity;
 import static com.lucasbarbosa.libraryapi.model.enums.SellerInformationTypeEnum.findByLiteral;
-import static com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum.*;
+import static com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum.TOKEN_KEY_GENERATED;
 import static java.lang.String.format;
 import static java.util.function.Predicate.not;
 import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
 
 /** @author Lucas Barbosa on 18/07/2021 */
 @RestController
@@ -44,17 +37,11 @@ import static org.springframework.http.HttpStatus.OK;
 @Validated
 public class SellerController {
 
-  private final MessageSource messageSource;
+  private final SellerService sellerService;
 
-  private final SellerRepository sellerRepository;
-
-  public SellerController(MessageSource messageSource, SellerRepository sellerRepository) {
-    this.messageSource = messageSource;
-    this.sellerRepository = sellerRepository;
+  public SellerController(SellerService sellerService) {
+    this.sellerService = sellerService;
   }
-
-  @Value("${seller.token.validity}")
-  private int tokenValidity;
 
   @PostMapping(
       path = "/register",
@@ -128,64 +115,9 @@ public class SellerController {
       @RequestParam(value = "token", required = false) String token,
       @RequestParam(value = "documentNumber", required = false) String documentNumber) {
 
-    switch (findByLiteral(infoType)) {
-      case TOKEN_EXPIRATION:
-        return Optional.ofNullable(token)
-            .filter(not(ObjectUtils::isEmpty))
-            .flatMap(this.sellerRepository::findByKey)
-            .map(seller -> remainingTokenValidity(seller, tokenValidity))
-            .map(this::buildTokenValidationMessage)
-            .orElse(
-                buildResponseWithStatusAndBody(
-                    OK, new SellerInfoResponse(retrieveRawMessage(TOKEN_KEY_INCORRECT))));
-      case TOKEN:
-        return Optional.ofNullable(documentNumber)
-            .filter(not(ObjectUtils::isEmpty))
-            .flatMap(this.sellerRepository::findByDocumentNumber)
-            .map(
-                seller ->
-                    buildResponseWithStatusAndBody(
-                        OK,
-                        new SellerInfoResponse(
-                            retrieveOneParamMessage(TOKEN_KEY_GENERATED, seller.getKey()))))
-            .orElse(
-                buildResponseWithStatusAndBody(
-                    OK, new SellerInfoResponse(retrieveRawMessage(TOKEN_DOCUMENT_INCORRECT))));
-      default:
-        return null;
-    }
-  }
-
-  private ResponseEntity<SellerInfoResponse> buildResponseWithStatusAndBody(
-      HttpStatus status, SellerInfoResponse body) {
-    return ResponseEntity.status(status).body(body);
-  }
-
-  private ResponseEntity<SellerInfoResponse> buildTokenValidationMessage(int daysRemainning) {
-    return Optional.of(daysRemainning)
-        .filter(days -> days > 0)
-        .map(
-            validPeriod ->
-                buildResponseWithStatusAndBody(
-                    OK,
-                    new SellerInfoResponse(
-                        retrieveOneParamMessage(TOKEN_KEY_VALIDITY, validPeriod.toString()))))
-        .orElse(
-            buildResponseWithStatusAndBody(
-                OK, new SellerInfoResponse(retrieveRawMessage(TOKEN_KEY_EXPIRED))));
-  }
-
-  private String retrieveOneParamMessage(TokenValidationEnum tokenValidationEnum, String param) {
-    return messageSource.getMessage(
-        tokenValidationEnum.getMessage(),
-        buildWithSingleParam(param),
-        LocaleContextHolder.getLocale());
-  }
-
-  private String retrieveRawMessage(TokenValidationEnum tokenValidationEnum) {
-    return messageSource.getMessage(
-        tokenValidationEnum.getMessage(),
-        createEmptyStringArray(),
-        LocaleContextHolder.getLocale());
+    return ResponseEntity.status(HttpStatus.OK)
+        .body(
+            this.sellerService.fetchSellerInformation(
+                findByLiteral(infoType), token, documentNumber));
   }
 }

@@ -1,8 +1,11 @@
 package com.lucasbarbosa.libraryapi.driver.utils;
 
 import com.lucasbarbosa.libraryapi.model.enums.SellerAssuranceMessageType;
+import com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.springframework.context.MessageSource;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
@@ -12,6 +15,7 @@ import java.util.function.Predicate;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.buildWithSingleParam;
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 
 /** @author Lucas Barbosa on 27/06/2021 */
@@ -79,5 +83,25 @@ public class LibraryUtils {
 
   public static String handleCustomerCnpj(String cnpj) {
     return cnpj.replace(".", EMPTY).replace("-", EMPTY).replace("/", EMPTY);
+  }
+
+  public static boolean areAllPresent(List<Optional<?>> optionalList) {
+    return optionalList.stream().allMatch(Optional::isPresent);
+  }
+
+  public static String retrieveOneParamMessage(
+          TokenValidationEnum tokenValidationEnum, String param, MessageSource messageSource) {
+    return messageSource.getMessage(
+            tokenValidationEnum.getMessage(),
+            buildWithSingleParam(param),
+            LocaleContextHolder.getLocale());
+  }
+
+  public static String retrieveRawMessage(
+          TokenValidationEnum tokenValidationEnum, MessageSource messageSource) {
+    return messageSource.getMessage(
+            tokenValidationEnum.getMessage(),
+            createEmptyStringArray(),
+            LocaleContextHolder.getLocale());
   }
 }

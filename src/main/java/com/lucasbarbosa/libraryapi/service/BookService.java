@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.unit;
+package com.lucasbarbosa.libraryapi.service;
 
 import com.lucasbarbosa.libraryapi.model.dto.BookRequest;
 import com.lucasbarbosa.libraryapi.model.dto.BookResponse;
