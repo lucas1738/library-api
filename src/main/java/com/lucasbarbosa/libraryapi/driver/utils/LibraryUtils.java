@@ -70,6 +70,7 @@ public class LibraryUtils {
   }
 
   public static String generateSpecificationQueryPattern(String string) {
+
     return "%" + string.toUpperCase() + "%";
   }
 
@@ -78,6 +79,7 @@ public class LibraryUtils {
   }
 
   public static String handleCustomerCpf(String cpf) {
+
     return cpf.replace(".", EMPTY).replace("-", EMPTY);
   }
 
@@ -90,18 +92,18 @@ public class LibraryUtils {
   }
 
   public static String retrieveOneParamMessage(
-          TokenValidationEnum tokenValidationEnum, String param, MessageSource messageSource) {
+      TokenValidationEnum tokenValidationEnum, String param, MessageSource messageSource) {
     return messageSource.getMessage(
-            tokenValidationEnum.getMessage(),
-            buildWithSingleParam(param),
-            LocaleContextHolder.getLocale());
+        tokenValidationEnum.getMessage(),
+        buildWithSingleParam(param),
+        LocaleContextHolder.getLocale());
   }
 
   public static String retrieveRawMessage(
-          TokenValidationEnum tokenValidationEnum, MessageSource messageSource) {
+      TokenValidationEnum tokenValidationEnum, MessageSource messageSource) {
     return messageSource.getMessage(
-            tokenValidationEnum.getMessage(),
-            createEmptyStringArray(),
-            LocaleContextHolder.getLocale());
+        tokenValidationEnum.getMessage(),
+        createEmptyStringArray(),
+        LocaleContextHolder.getLocale());
   }
 }

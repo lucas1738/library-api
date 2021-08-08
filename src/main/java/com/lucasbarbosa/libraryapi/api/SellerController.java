@@ -3,7 +3,6 @@ package com.lucasbarbosa.libraryapi.api;
 import com.lucasbarbosa.libraryapi.driver.validation.EnumAssurance;
 import com.lucasbarbosa.libraryapi.model.dto.SellerInfoResponse;
 import com.lucasbarbosa.libraryapi.model.dto.SellerRequest;
-import com.lucasbarbosa.libraryapi.model.entity.Seller;
 import com.lucasbarbosa.libraryapi.model.enums.SellerInformationTypeEnum;
 import com.lucasbarbosa.libraryapi.service.SellerService;
 import io.swagger.annotations.*;
