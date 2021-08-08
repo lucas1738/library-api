@@ -12,7 +12,7 @@ public enum SellerInformationTypeEnum {
   TOKEN,
   TOKEN_EXPIRATION;
 
-  public static SellerInformationTypeEnum findByLiteral(String literal) {
+  public static SellerInformationTypeEnum findSellerInformationByLiteral(String literal) {
     return Arrays.stream(SellerInformationTypeEnum.values())
         .filter(infoType -> infoType.toString().equalsIgnoreCase(literal))
         .findFirst()
