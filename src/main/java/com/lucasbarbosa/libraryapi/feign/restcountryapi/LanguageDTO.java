@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.restcountryapi;
+package com.lucasbarbosa.libraryapi.feign.restcountryapi;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;

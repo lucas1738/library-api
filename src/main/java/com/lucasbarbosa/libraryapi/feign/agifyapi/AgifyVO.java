@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.agifyapi;
+package com.lucasbarbosa.libraryapi.feign.agifyapi;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

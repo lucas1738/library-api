@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.nationalizeapi;
+package com.lucasbarbosa.libraryapi.feign.nationalizeapi;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

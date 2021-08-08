@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.agifyapi;
+package com.lucasbarbosa.libraryapi.feign.agifyapi;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.FeignIntegrationException;
 import lombok.extern.slf4j.Slf4j;

@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.nationalizeapi;
+package com.lucasbarbosa.libraryapi.feign.nationalizeapi;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;

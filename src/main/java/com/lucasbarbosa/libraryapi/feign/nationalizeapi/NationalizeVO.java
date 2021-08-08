@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.nationalizeapi;
+package com.lucasbarbosa.libraryapi.feign.nationalizeapi;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

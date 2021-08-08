@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.stockapi;
+package com.lucasbarbosa.libraryapi.feign.stockapi;
 
 import com.lucasbarbosa.libraryapi.driver.exception.custom.FeignIntegrationException;
 import lombok.extern.slf4j.Slf4j;

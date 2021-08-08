@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.restcountryapi;
+package com.lucasbarbosa.libraryapi.feign.restcountryapi;
 
 import lombok.Getter;
 import org.apache.commons.lang.builder.ToStringBuilder;

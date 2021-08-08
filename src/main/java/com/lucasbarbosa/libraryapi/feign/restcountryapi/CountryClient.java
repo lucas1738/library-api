@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.restcountryapi;
+package com.lucasbarbosa.libraryapi.feign.restcountryapi;
 
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;

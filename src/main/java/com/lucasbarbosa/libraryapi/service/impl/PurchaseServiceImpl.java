@@ -1,10 +1,9 @@
 package com.lucasbarbosa.libraryapi.service.impl;
 
-import com.lucasbarbosa.libraryapi.integration.productapi.ProductService;
-import com.lucasbarbosa.libraryapi.integration.stockapi.StockService;
+import com.lucasbarbosa.libraryapi.feign.productapi.ProductService;
+import com.lucasbarbosa.libraryapi.feign.stockapi.StockService;
 import com.lucasbarbosa.libraryapi.service.PurchaseService;
 import lombok.SneakyThrows;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
@@ -42,7 +41,6 @@ public class PurchaseServiceImpl implements PurchaseService {
                         ? stock.get().multiply(price.get())
                         : null);
 
-    return Optional.ofNullable(priceFuture.get())
-        .filter(Predicate.not(ObjectUtils::isEmpty));
+    return Optional.ofNullable(priceFuture.get()).filter(Predicate.not(ObjectUtils::isEmpty));
   }
 }

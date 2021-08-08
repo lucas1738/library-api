@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.integration.productapi;
+package com.lucasbarbosa.libraryapi.feign.customerapi;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategy;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
@@ -9,32 +9,36 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
-import java.math.BigDecimal;
-
 /** @author Lucas Barbosa on 31/07/2021 */
-@Getter
 @Builder
-@NoArgsConstructor
+@Getter
 @AllArgsConstructor
+@NoArgsConstructor
 @JsonNaming(PropertyNamingStrategy.SnakeCaseStrategy.class)
-public class ProductVO {
+public class CustomerVO {
 
-  private String id;
+  private Integer id;
   private String uid;
-  private Long number;
-  private String leadingZeroNumber;
-  private BigDecimal decimal;
-  private Double normal;
-  private String hexadecimal;
-  private Double positive;
-  private Double negative;
-  private Integer nonZeroNumber;
-  public Integer digit;
+  private String password;
+  private String firstName;
+  private String lastName;
+  private String username;
+  private String email;
+  private String avatar;
+  private String gender;
+  private String phoneNumber;
+  private String socialInsuranceNumber;
+  private String dateOfBirth;
+  private EmploymentDTO employment;
+  private AddressDTO address;
+  private CreditCardVO creditCardVO;
+  private SubscriptionDTO subscription;
 
   @Override
   public String toString() {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
-        .append("price", decimal)
+        .append("firstName", firstName)
+        .append("lastName", lastName)
         .toString();
   }
 }
