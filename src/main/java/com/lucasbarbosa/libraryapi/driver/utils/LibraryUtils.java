@@ -1,17 +1,22 @@
 package com.lucasbarbosa.libraryapi.driver.utils;
 
+import com.lucasbarbosa.libraryapi.feign.IntegrationParamEnum;
 import com.lucasbarbosa.libraryapi.model.enums.SellerAssuranceMessageType;
 import com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.ObjectUtils;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -106,4 +111,12 @@ public class LibraryUtils {
         createEmptyStringArray(),
         LocaleContextHolder.getLocale());
   }
+
+  public static String searchMapByParam(
+      Optional<Map<String, Object>> params, IntegrationParamEnum key) {
+    return params
+        .map(mapParams -> mapParams.get(key.getValue()).toString())
+        .orElse(StringUtils.EMPTY);
+  }
+
 }

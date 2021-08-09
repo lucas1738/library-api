@@ -1,18 +1,17 @@
 package com.lucasbarbosa.libraryapi.feign.productapi;
 
-import com.lucasbarbosa.libraryapi.driver.exception.custom.FeignIntegrationException;
+import com.lucasbarbosa.libraryapi.feign.IntegrationClient;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.util.Map;
 import java.util.Optional;
-
-import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.retrieveExceptionClassName;
 
 /** @author Lucas Barbosa on 01/08/2021 */
 @Service
 @Slf4j
-public class ProductService {
+public class ProductService implements IntegrationClient<BigDecimal> {
 
   private final ProductClient productClient;
 
@@ -20,26 +19,23 @@ public class ProductService {
     this.productClient = productClient;
   }
 
-  public Optional<BigDecimal> fetchProductPrice() {
+  @Override
+  public Optional<BigDecimal> writeClientIntegration(Optional<Map<String, Object>> params) {
+    return Optional.ofNullable(productClient.findProduct())
+        .map(
+            product -> {
+              log.info("m=fetchProductPrice product={}", product);
+              return product.getDecimal();
+            })
+        .or(
+            () -> {
+              log.warn("m=fetchProductPrice failed");
+              return Optional.empty();
+            });
+  }
 
-    try {
-      return Optional.ofNullable(productClient.findProduct())
-          .map(
-              product -> {
-                log.info("m=fetchProductPrice product={}", product);
-                return product.getDecimal();
-              })
-          .or(
-              () -> {
-                log.warn("m=fetchProductPrice failed");
-                return Optional.empty();
-              });
-    } catch (Exception exception) {
-      log.error(
-          "m=fetchProductPrice exception={} exceptionName={}",
-          exception,
-          retrieveExceptionClassName(exception));
-      throw new FeignIntegrationException(this.getClass().getSimpleName());
-    }
+  @Override
+  public Class identify() {
+    return this.getClass();
   }
 }

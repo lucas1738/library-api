@@ -9,5 +9,5 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface NationalizeClient {
 
   @GetMapping
-  NationalizeVO findCustomerAge(@RequestParam(name = "name") String name);
+  NationalizeVO findCustomerCountry(@RequestParam(name = "name") String name);
 }

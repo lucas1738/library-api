@@ -31,7 +31,7 @@ public class CustomerVO {
   private String dateOfBirth;
   private EmploymentDTO employment;
   private AddressDTO address;
-  private CreditCardVO creditCardVO;
+  private CreditCardDTO creditCardDTO;
   private SubscriptionDTO subscription;
 
   @Override

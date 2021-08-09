@@ -14,6 +14,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.function.Predicate;
 
 import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.areAllPresent;
+import static java.util.Optional.*;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
 /** @author Lucas Barbosa on 07/08/2021 */
@@ -33,14 +34,14 @@ public class PurchaseServiceImpl implements PurchaseService {
   @Override
   public Optional<BigDecimal> obtainPurchaseFinalPrice() {
     CompletableFuture<BigDecimal> priceFuture =
-        supplyAsync(stockService::fetchAvailableStock)
+        supplyAsync(() -> stockService.retrieveClient(empty()))
             .thenCombine(
-                supplyAsync(productService::fetchProductPrice),
+                supplyAsync(() -> productService.retrieveClient(empty())),
                 (stock, price) ->
                     areAllPresent(List.of(stock, price))
                         ? stock.get().multiply(price.get())
                         : null);
 
-    return Optional.ofNullable(priceFuture.get()).filter(Predicate.not(ObjectUtils::isEmpty));
+    return ofNullable(priceFuture.get()).filter(Predicate.not(ObjectUtils::isEmpty));
   }
 }

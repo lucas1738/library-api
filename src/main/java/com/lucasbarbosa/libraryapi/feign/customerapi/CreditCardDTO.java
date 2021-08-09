@@ -5,7 +5,7 @@ import lombok.Getter;
 
 /** @author Lucas Barbosa on 31/07/2021 */
 @Getter
-public class CreditCardVO {
+public class CreditCardDTO {
 
   @JsonProperty("cc_number")
   private String creditCardNumber;
