@@ -24,13 +24,15 @@ feign:
     stock:
       url: http://www.randomnumberapi.com/api/v1.0
     agify:
-      url: http://api.agify.io/
+      url: https://api.agify.io/
+    nationalize:
+      url: https://api.nationalize.io/
     country:
       url: http://restcountries.eu/rest/v2/alpha
     product:
       url: https://random-data-api.com/api/number/random_number
     user:
-      url: http://random-data-api.com/api
+      url: https://random-data-api.com/api/
 
 seller:
   token:

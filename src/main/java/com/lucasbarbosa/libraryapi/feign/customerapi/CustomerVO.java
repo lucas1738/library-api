@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
+import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.byBlankSeparator;
+
 /** @author Lucas Barbosa on 31/07/2021 */
 @Builder
 @Getter
@@ -39,6 +41,14 @@ public class CustomerVO {
     return new ToStringBuilder(this, ToStringStyle.SHORT_PREFIX_STYLE)
         .append("firstName", firstName)
         .append("lastName", lastName)
+        .toString();
+  }
+
+  public static String buildFullName(CustomerVO customerVO) {
+    return new StringBuilder()
+        .append(customerVO.getFirstName())
+        .append(byBlankSeparator())
+        .append(customerVO.getLastName())
         .toString();
   }
 }

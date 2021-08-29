@@ -6,7 +6,6 @@ import com.lucasbarbosa.libraryapi.model.enums.TokenValidationEnum;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.apache.commons.lang.StringUtils;
-import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.util.ObjectUtils;
@@ -16,7 +15,6 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import java.util.function.Predicate;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -28,6 +26,7 @@ import static org.apache.commons.lang3.StringUtils.EMPTY;
 public class LibraryUtils {
 
   private static final String COMMA = ", ";
+  private static final String BLANK_SEPARATOR = " ";
   public static final int ONE = 1;
   public static final int ONE_THOUSAND = 1000;
   private static final String ENUM_ASSURANCE_MESSAGE = "field %s must be any of %s";
@@ -38,6 +37,9 @@ public class LibraryUtils {
 
   public static String byComma() {
     return COMMA;
+  }
+  public static String byBlankSeparator() {
+    return BLANK_SEPARATOR;
   }
 
   public static String getEnumAssuranceMessage() {
@@ -118,5 +120,4 @@ public class LibraryUtils {
         .map(mapParams -> mapParams.get(key.getValue()).toString())
         .orElse(StringUtils.EMPTY);
   }
-
 }

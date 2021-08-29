@@ -6,6 +6,10 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.UUID;
+
+import static com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum.findByLiteral;
+
 /** @author Lucas Barbosa on 27/06/2021 */
 @Getter
 @Setter
@@ -50,4 +54,5 @@ public class Book {
   private void onUpdate() {
     this.updateDate = LocalDateTime.now();
   }
+
 }

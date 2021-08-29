@@ -7,6 +7,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(name = "user", url = "${feign.client.user.url}")
 public interface UserClient {
 
-  @GetMapping("/users/random_user")
+  @GetMapping("users/random_user")
   CustomerVO findCustomer();
 }
