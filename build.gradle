@@ -19,6 +19,9 @@ configurations {
         extendsFrom annotationProcessor
     }
 
+    contractImplementation.extendsFrom testImplementation
+    contractRuntime.extendsFrom testRuntime
+
 }
 
 sourceSets {
@@ -34,6 +37,19 @@ sourceSets {
         java {
             srcDirs = ['src/test/java']
         }
+    }
+
+    contract {
+        java {
+            srcDirs = ['src/contract/java']
+        }
+
+        resources {
+            srcDirs = ['src/contract/resources']
+        }
+
+        compileClasspath += main.output + test.output
+        runtimeClasspath += main.output + test.output
     }
 }
 
@@ -69,6 +85,13 @@ dependencies {
 
     testImplementation group: 'org.assertj', name: 'assertj-core', version: '3.6.1'
 }
+
+task contractTest(type: Test) {
+    testClassesDirs = sourceSets.contract.output.classesDirs
+    classpath = sourceSets.contract.runtimeClasspath
+}
+
+//check.dependsOn contractTest
 
 test {
     useJUnitPlatform()
