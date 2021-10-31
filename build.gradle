@@ -10,7 +10,7 @@ sourceCompatibility = '11'
 
 apply plugin: 'java'
 apply plugin: 'scala'
-
+apply plugin: 'idea'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
 
@@ -19,6 +19,22 @@ configurations {
         extendsFrom annotationProcessor
     }
 
+}
+
+sourceSets {
+    main {
+        java {
+            srcDirs = ['src/main/java']
+        }
+        resources {
+            srcDirs = ['src/main/resources']
+        }
+    }
+    test {
+        java {
+            srcDirs = ['src/test/java']
+        }
+    }
 }
 
 repositories {
