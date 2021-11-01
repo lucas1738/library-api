@@ -19,8 +19,8 @@ configurations {
         extendsFrom annotationProcessor
     }
 
-    contractImplementation.extendsFrom testImplementation
-    contractRuntime.extendsFrom testRuntime
+    contractTestImplementation.extendsFrom testImplementation
+    contractTestRuntime.extendsFrom testRuntime
 
 }
 
@@ -39,13 +39,13 @@ sourceSets {
         }
     }
 
-    contract {
+    contractTest {
         java {
-            srcDirs = ['src/contract/java']
+            srcDirs = ['src/contractTest/java']
         }
 
         resources {
-            srcDirs = ['src/contract/resources']
+            srcDirs = ['src/contractTest/resources']
         }
 
         compileClasspath += main.output + test.output
@@ -87,11 +87,34 @@ dependencies {
 }
 
 task contractTest(type: Test) {
-    testClassesDirs = sourceSets.contract.output.classesDirs
-    classpath = sourceSets.contract.runtimeClasspath
+    testClassesDirs = sourceSets.contractTest.output.classesDirs
+    classpath = sourceSets.contractTest.runtimeClasspath
+
+    doLast { println 'Contract Tests Done' }
 }
 
-//check.dependsOn contractTest
+task stage(type: GradleBuild){
+    tasks = ['clean', 'build']
+    doLast { println 'Stagging Done' }
+}
+
+task quality(type: GradleBuild){
+    tasks = ['clean', 'test', 'contractTest']
+    doLast { println 'Quality Assurance Done' }
+}
+
+tasks.withType(Test) {
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+}
+
+test {
+    testLogging.showStandardStreams = true
+    testLogging.exceptionFormat = 'full'
+}
+
+check.dependsOn contractTest
 
 test {
     useJUnitPlatform()

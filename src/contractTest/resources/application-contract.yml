@@ -4,6 +4,8 @@ server:
     context-path: /library-api
 
 spring:
+  main:
+    web-application-type: none
   jpa:
     database: POSTGRESQL
     show-sql: true
