@@ -9,6 +9,8 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import static com.lucasbarbosa.libraryapi.template.BookRequestTemplate.*;
+
 /** @author Lucas Barbosa on 03/07/2021 */
 @ContextConfiguration(classes = {ContractTestConfiguration.class})
 @RunWith(SpringRunner.class)
@@ -21,7 +23,7 @@ public class BookContractTest extends BookContractTestSupport {
   public void givenBookGenrerUnallowedValueAndExcessiveNumberPagesThenReturnBadRequest()
       throws Exception {
 
-    writeAsJson(BookRequestTemplate.buildWithUnsuitableBookGenreAndExcessiveNumberPages());
+    writeAsJson(buildWithUnsuitableBookGenreAndExcessiveNumberPages());
 
     onBookRegisterFailValidateMultipleMessages(
         BOOK_GENRE_ENUM_VALIDATION_MESSAGE, NUMBER_PAGES_FIELD_MAX_VALUE_VALIDATION_MESSAGE);
@@ -32,7 +34,7 @@ public class BookContractTest extends BookContractTestSupport {
       "Given null title and empty author, then return BAD REQUEST with field validation message")
   public void givenNullTitleAndEmptyAuthorThenReturnBadRequest() throws Exception {
 
-    writeAsJson(BookRequestTemplate.buildWithNullTitleAndEmptyAuthor());
+    writeAsJson(buildWithNullTitleAndEmptyAuthor());
 
     onBookRegisterFailValidateMultipleMessages(
         TITLE_FIELD_VALIDATION_MESSAGE, AUTHOR_FIELD_VALIDATION_MESSAGE);
@@ -43,7 +45,7 @@ public class BookContractTest extends BookContractTestSupport {
       "Given zero number of pages and empty title, then return BAD REQUEST with field validation message")
   public void givenZeroNumberOfPagesAndEmptyTitleThenReturnBadRequest() throws Exception {
 
-    writeAsJson(BookRequestTemplate.buildWithZeroNumberPagesAndEmptyTitle());
+    writeAsJson(buildWithZeroNumberPagesAndEmptyTitle());
 
     onBookRegisterFailValidateMultipleMessages(
         TITLE_FIELD_VALIDATION_MESSAGE, NUMBER_PAGES_FIELD_MIN_VALUE_VALIDATION_MESSAGE);

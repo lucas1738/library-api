@@ -15,6 +15,7 @@ import java.util.stream.Stream;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -43,7 +44,7 @@ public class BookContractTestSupport {
       String firstValidationMessage, String secondValidationMessage) throws Exception {
     ResultActions result =
         mockMvc.perform(
-            MockMvcRequestBuilders.post(BOOK_API.concat(CREATE_BOOK))
+            post(BOOK_API.concat(CREATE_BOOK))
                 .contentType(CONTENT_TYPE)
                 .content(json)
                 .accept(MediaType.APPLICATION_JSON));
