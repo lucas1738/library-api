@@ -2,15 +2,18 @@ package com.lucasbarbosa.libraryapi.api;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
-import java.util.Objects;
+import java.util.Optional;
 import java.util.stream.Stream;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -48,7 +51,10 @@ public class BookContractTestSupport {
 
     result.andDo(print()).andExpect(status().isBadRequest());
     String exceptionMessage =
-        Objects.requireNonNull(result.andReturn().getResolvedException()).getMessage();
+        Optional.of(result.andReturn())
+            .map(MvcResult::getResolvedException)
+            .map(Exception::getMessage)
+            .orElse(EMPTY);
     assertTrue(
         Stream.of(firstValidationMessage, secondValidationMessage)
             .allMatch(exceptionMessage::contains));
