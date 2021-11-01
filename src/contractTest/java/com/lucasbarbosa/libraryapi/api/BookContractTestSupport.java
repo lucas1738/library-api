@@ -26,7 +26,6 @@ public class BookContractTestSupport {
   protected String json;
   protected String BOOK_API = "/books";
   protected String CREATE_BOOK = "/register/";
-  protected String MESSAGE_FIELD = "$.message";
   protected String BOOK_GENRE_ENUM_VALIDATION_MESSAGE =
       "field bookGenre must be any of ACTION, COMEDY, DRAMA, FANTASY, HORROR, MYSTERY, ROMANCE, THRILLER";
   protected String AUTHOR_FIELD_VALIDATION_MESSAGE = "author must not be empty or null";
