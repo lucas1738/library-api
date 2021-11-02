@@ -1,7 +1,6 @@
-package com.lucasbarbosa.libraryapi.api;
+package com.lucasbarbosa.libraryapi.api.book;
 
 import com.lucasbarbosa.libraryapi.ContractTestConfiguration;
-import com.lucasbarbosa.libraryapi.template.BookRequestTemplate;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;

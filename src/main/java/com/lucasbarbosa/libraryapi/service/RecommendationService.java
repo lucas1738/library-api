@@ -1,7 +1,7 @@
 package com.lucasbarbosa.libraryapi.service;
 
 import com.lucasbarbosa.libraryapi.model.dto.CustomerLibrary;
-import com.lucasbarbosa.libraryapi.model.dto.RecommendationCustomer;
+import com.lucasbarbosa.libraryapi.model.dto.CustomerRecommendation;
 
 import java.util.Optional;
 
@@ -10,5 +10,5 @@ public interface RecommendationService {
 
   Optional<CustomerLibrary> fetchCustomerLibrary();
 
-  Optional<RecommendationCustomer> getRecommendation();
+  Optional<CustomerRecommendation> getRecommendation();
 }

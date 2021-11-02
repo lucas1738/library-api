@@ -1,6 +1,6 @@
 package com.lucasbarbosa.libraryapi.api;
 
-import com.lucasbarbosa.libraryapi.model.dto.RecommendationCustomer;
+import com.lucasbarbosa.libraryapi.model.dto.CustomerRecommendation;
 import com.lucasbarbosa.libraryapi.service.PurchaseService;
 import com.lucasbarbosa.libraryapi.service.RecommendationService;
 import io.swagger.annotations.Api;
@@ -42,11 +42,11 @@ public class PurchaseController {
   @SneakyThrows
   @GetMapping("/recommendation")
   @ApiOperation(value = "Resource in of customer recommendation")
-  public ResponseEntity<RecommendationCustomer> getRecommendAtion() {
+  public ResponseEntity<CustomerRecommendation> getRecommendation() {
     var recommendation = recommendationService.getRecommendation();
 
     return recommendation
         .map(ResponseEntity::ok)
-        .orElseGet(() -> ResponseEntity.ok(new RecommendationCustomer()));
+        .orElseGet(() -> ResponseEntity.ok(new CustomerRecommendation()));
   }
 }

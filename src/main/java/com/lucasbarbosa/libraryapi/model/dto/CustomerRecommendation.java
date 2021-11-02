@@ -13,15 +13,15 @@ import static java.util.stream.Collectors.toList;
 @Getter
 @Setter
 @Builder
-public class RecommendationCustomer {
+public class CustomerRecommendation {
 
   private CustomerLibrary customer;
 
   private List<String> recommendation;
 
-  public static RecommendationCustomer of(
+  public static CustomerRecommendation of(
       Optional<CustomerLibrary> customerLibrary, List<BookResponse> bookResponse) {
-    return RecommendationCustomer.builder()
+    return CustomerRecommendation.builder()
         .customer(customerLibrary.orElse(null))
         .recommendation(bookResponse.stream().map(BookResponse::getTitle).collect(toList()))
         .build();

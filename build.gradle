@@ -51,6 +51,7 @@ sourceSets {
         compileClasspath += main.output + test.output
         runtimeClasspath += main.output + test.output
     }
+
 }
 
 repositories {
@@ -58,6 +59,9 @@ repositories {
 }
 
 dependencies {
+    implementation 'org.projectlombok:lombok:1.18.20'
+    implementation 'org.projectlombok:lombok:1.18.20'
+    annotationProcessor "org.springframework.boot:spring-boot-configuration-processor"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation('org.springframework.boot:spring-boot-starter-webflux')
     implementation('org.springframework.boot:spring-boot-starter-cache')
@@ -93,12 +97,12 @@ task contractTest(type: Test) {
     doLast { println 'Contract Tests Done' }
 }
 
-task stage(type: GradleBuild){
+task stage(type: GradleBuild) {
     tasks = ['clean', 'build']
     doLast { println 'Stagging Done' }
 }
 
-task quality(type: GradleBuild){
+task quality(type: GradleBuild) {
     tasks = ['clean', 'test', 'contractTest']
     doLast { println 'Quality Assurance Done' }
 }

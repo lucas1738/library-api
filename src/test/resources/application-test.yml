@@ -1,0 +1,10 @@
+scenarios:
+  customerRecommendation:
+    0:
+      customerAge: 14
+      recommendation: COMEDY
+    1:
+      customerAge: 24
+      recommendation: APPROVED
+
+

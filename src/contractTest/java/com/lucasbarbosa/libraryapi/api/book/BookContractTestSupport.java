@@ -1,4 +1,4 @@
-package com.lucasbarbosa.libraryapi.api;
+package com.lucasbarbosa.libraryapi.api.book;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

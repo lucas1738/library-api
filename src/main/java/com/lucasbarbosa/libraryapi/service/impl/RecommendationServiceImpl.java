@@ -7,7 +7,7 @@ import com.lucasbarbosa.libraryapi.feign.customerapi.CustomerVO;
 import com.lucasbarbosa.libraryapi.feign.nationalizeapi.NationalizeService;
 import com.lucasbarbosa.libraryapi.feign.restcountryapi.RestCountryService;
 import com.lucasbarbosa.libraryapi.model.dto.CustomerLibrary;
-import com.lucasbarbosa.libraryapi.model.dto.RecommendationCustomer;
+import com.lucasbarbosa.libraryapi.model.dto.CustomerRecommendation;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import com.lucasbarbosa.libraryapi.service.BookService;
 import com.lucasbarbosa.libraryapi.service.RecommendationService;
@@ -70,10 +70,10 @@ public class RecommendationServiceImpl implements RecommendationService {
   }
 
   @Override
-  public Optional<RecommendationCustomer> getRecommendation() {
+  public Optional<CustomerRecommendation> getRecommendation() {
     var customer = fetchCustomerLibrary();
     var recommendation =
-        RecommendationCustomer.of(
+        CustomerRecommendation.of(
             customer, bookService.fetchBooksByGenre(obtainRecommendedGenreByCustomer(customer)));
     return Optional.ofNullable(recommendation);
   }
