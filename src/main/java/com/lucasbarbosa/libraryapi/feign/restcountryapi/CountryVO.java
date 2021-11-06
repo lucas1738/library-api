@@ -1,6 +1,9 @@
 package com.lucasbarbosa.libraryapi.feign.restcountryapi;
 
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.apache.commons.lang.builder.ToStringBuilder;
 import org.apache.commons.lang.builder.ToStringStyle;
 
@@ -8,6 +11,9 @@ import java.util.List;
 
 /** @author Lucas Barbosa on 31/07/2021 */
 @Getter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class CountryVO {
 
   private String name;

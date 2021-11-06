@@ -72,9 +72,10 @@ public class RecommendationServiceImpl implements RecommendationService {
   @Override
   public Optional<CustomerRecommendation> getRecommendation() {
     var customer = fetchCustomerLibrary();
+    var genre = obtainRecommendedGenreByCustomer(customer);
     var recommendation =
         CustomerRecommendation.of(
-            customer, bookService.fetchBooksByGenre(obtainRecommendedGenreByCustomer(customer)));
+            customer, genre, bookService.fetchBooksByGenre(genre));
     return Optional.ofNullable(recommendation);
   }
 
