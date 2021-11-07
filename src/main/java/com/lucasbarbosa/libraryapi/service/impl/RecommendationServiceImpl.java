@@ -28,6 +28,7 @@ import static com.lucasbarbosa.libraryapi.driver.utils.LibraryUtils.areAllPresen
 import static com.lucasbarbosa.libraryapi.feign.IntegrationParamEnum.COUNTRY_CODE;
 import static com.lucasbarbosa.libraryapi.feign.IntegrationParamEnum.CUSTOMER_NAME;
 import static com.lucasbarbosa.libraryapi.model.dto.CustomerLibrary.of;
+import static com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum.obtainRecommendedAge;
 import static java.util.Optional.ofNullable;
 import static java.util.concurrent.CompletableFuture.supplyAsync;
 
@@ -74,27 +75,14 @@ public class RecommendationServiceImpl implements RecommendationService {
     var customer = fetchCustomerLibrary();
     var genre = obtainRecommendedGenreByCustomer(customer);
     var recommendation =
-        CustomerRecommendation.of(
-            customer, genre, bookService.fetchBooksByGenre(genre));
+        CustomerRecommendation.of(customer, genre, bookService.fetchBooksByGenre(genre));
     return Optional.ofNullable(recommendation);
   }
 
   private BookGenreEnum obtainRecommendedGenreByCustomer(
       Optional<CustomerLibrary> customerLibrary) {
     var customerAge = getCustomerAge(customerLibrary);
-    if (customerAge < 15) {
-      return BookGenreEnum.COMEDY;
-    } else if (customerAge < 25) {
-      return BookGenreEnum.ACTION;
-    } else if (customerAge < 35) {
-      return BookGenreEnum.MYSTERY;
-    } else if (customerAge < 55) {
-      return BookGenreEnum.THRILLER;
-    } else if (customerAge < 65) {
-      return BookGenreEnum.FANTASY;
-    } else if (customerAge < 75) {
-      return BookGenreEnum.HORROR;
-    } else return BookGenreEnum.ROMANCE;
+    return obtainRecommendedAge(customerAge);
   }
 
   private Integer getCustomerAge(Optional<CustomerLibrary> customerLibrary) {

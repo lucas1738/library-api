@@ -107,4 +107,8 @@ public class CustomerRecommendationTestSupport {
     when(agifyClient.findCustomerAge(any())).thenReturn(agifyVO);
     when(bookService.fetchBooksByGenre(any())).thenReturn(Collections.emptyList());
   }
+
+  protected static String getFirstChar(String string){
+    return String.valueOf(string.charAt(0));
+  }
 }

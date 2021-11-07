@@ -58,8 +58,8 @@ scenarios:
       customerAge: 80
       recommendation: ROMANCE
       customerFirstName: Alonso
-      customerCountryOne: ES
+      customerCountryOne: US
       customerCountryProbabilityOne: 1
       customerCountryTwo: CO
       customerCountryProbabilityTwo: 0
-      customerCountry: Spain
+      customerCountry: United States

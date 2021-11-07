@@ -2,6 +2,7 @@ package com.lucasbarbosa.libraryapi.feign.restcountryapi;
 
 import com.lucasbarbosa.libraryapi.feign.IntegrationClient;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 
 import java.util.Map;
@@ -24,6 +25,8 @@ public class RestCountryService implements IntegrationClient<String> {
   @Override
   public Optional<String> writeClientIntegration(Optional<Map<String, Object>> params) {
     String countryCode = searchMapByParam(params, COUNTRY_CODE);
+
+
 
     return Optional.ofNullable(countryClient.findCountryByInitial(countryCode))
         .map(
