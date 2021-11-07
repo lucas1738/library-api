@@ -10,9 +10,13 @@ public class CustomerCountryPojo {
 
   public CustomerCountryPojo() {}
 
-  public CustomerCountryPojo(String country, BigDecimal probability) {
+  private CustomerCountryPojo(String country, String probability) {
     this.country = country;
-    this.probability = probability;
+    this.probability = new BigDecimal(probability);
+  }
+
+  public static CustomerCountryPojo build(String country, String probability) {
+    return new CustomerCountryPojo(country, probability);
   }
 
   public String getCountry() {

@@ -12,6 +12,9 @@ import com.lucasbarbosa.libraryapi.feign.nationalizeapi.NationalizeVO;
 import com.lucasbarbosa.libraryapi.feign.restcountryapi.CountryClient;
 import com.lucasbarbosa.libraryapi.feign.restcountryapi.CountryVO;
 import com.lucasbarbosa.libraryapi.feign.restcountryapi.RestCountryService;
+import com.lucasbarbosa.libraryapi.model.dto.CustomerLibrary;
+import com.lucasbarbosa.libraryapi.model.dto.CustomerRecommendation;
+import com.lucasbarbosa.libraryapi.pojo.CustomerCountryPojo;
 import com.lucasbarbosa.libraryapi.pojo.CustomerRecommendationPojo;
 import com.lucasbarbosa.libraryapi.service.BookService;
 import com.lucasbarbosa.libraryapi.service.RecommendationService;
@@ -22,9 +25,11 @@ import org.mockito.MockitoAnnotations;
 
 import java.math.BigDecimal;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
+import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
@@ -108,7 +113,30 @@ public class CustomerRecommendationTestSupport {
     when(bookService.fetchBooksByGenre(any())).thenReturn(Collections.emptyList());
   }
 
-  protected static String getFirstChar(String string){
+  protected String getRecommendation() {
+    return recommendationService
+        .getRecommendation()
+        .map(CustomerRecommendation::getRecommendedGenre)
+        .orElse(EMPTY);
+  }
+
+  protected String getCountryRecommendation() {
+    return recommendationService
+        .getRecommendation()
+        .map(CustomerRecommendation::getCustomer)
+        .map(CustomerLibrary::getCountry)
+        .map(CustomerRecommendationTestSupport::getFirstChar)
+        .orElse(EMPTY);
+  }
+
+  protected String extractScenarioCountry(List<CustomerCountryPojo> countryList) {
+    return countryList.stream()
+        .max(Comparator.comparing(CustomerCountryPojo::getProbability))
+        .map(CustomerCountryPojo::getCountry)
+        .orElse(EMPTY);
+  }
+
+  protected static String getFirstChar(String string) {
     return String.valueOf(string.charAt(0));
   }
 }

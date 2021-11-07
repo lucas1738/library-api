@@ -1,8 +1,5 @@
 package com.lucasbarbosa.libraryapi.component;
 
-import com.lucasbarbosa.libraryapi.model.dto.CustomerLibrary;
-import com.lucasbarbosa.libraryapi.model.dto.CustomerRecommendation;
-import com.lucasbarbosa.libraryapi.pojo.CustomerCountryPojo;
 import com.lucasbarbosa.libraryapi.properties.ComponentTestProperties;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,12 +9,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.math.BigDecimal;
-import java.util.Comparator;
 import java.util.List;
 
+import static com.lucasbarbosa.libraryapi.pojo.CustomerCountryPojo.build;
 import static java.util.stream.Collectors.toList;
-import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /** @author Lucas Barbosa on 02/11/2021 */
@@ -37,31 +32,15 @@ class CustomerRecommendationTest extends CustomerRecommendationTestSupport {
           setUpTestMocks(scenario);
           var countryList =
               List.of(
-                  new CustomerCountryPojo(
+                  build(
                       scenario.getCustomerCountryOne(),
-                      new BigDecimal(scenario.getCustomerCountryProbabilityOne())),
-                  new CustomerCountryPojo(
+                      scenario.getCustomerCountryProbabilityOne()),
+                  build(
                       scenario.getCustomerCountryTwo(),
-                      new BigDecimal(scenario.getCustomerCountryProbabilityTwo())));
-          var countryInitial =
-              countryList.stream()
-                  .max(Comparator.comparing(CustomerCountryPojo::getProbability))
-                  .map(CustomerCountryPojo::getCountry)
-                  .orElse(EMPTY);
-          assertThat(getFirstChar(countryInitial))
-              .isEqualTo(
-                  recommendationService
-                      .getRecommendation()
-                      .map(CustomerRecommendation::getCustomer)
-                      .map(CustomerLibrary::getCountry)
-                      .map(CustomerRecommendationTestSupport::getFirstChar)
-                      .orElse(EMPTY));
-          assertThat(scenario.getRecommendation())
-              .isEqualTo(
-                  recommendationService
-                      .getRecommendation()
-                      .map(CustomerRecommendation::getRecommendedGenre)
-                      .orElse(EMPTY));
+                      scenario.getCustomerCountryProbabilityTwo()));
+          var scenarioCountry = extractScenarioCountry(countryList);
+          assertThat(getFirstChar(scenarioCountry)).isEqualTo(getCountryRecommendation());
+          assertThat(scenario.getRecommendation()).isEqualTo(getRecommendation());
         });
   }
 }
