@@ -1,0 +1,7 @@
+ext {
+    flyway {
+        url='jdbc:postgresql://localhost:5432/library_db'
+        user='lucasbarbosa'
+        password='lucas123'
+    }
+}
