@@ -1,3 +1,7 @@
+spring:
+  flyway:
+    enabled: false
+
 scenarios:
   customerRecommendation:
     0:

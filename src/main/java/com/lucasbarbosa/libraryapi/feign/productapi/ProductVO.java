@@ -29,7 +29,7 @@ public class ProductVO {
   private Double positive;
   private Double negative;
   private Integer nonZeroNumber;
-  public Integer digit;
+  private Integer digit;
 
   @Override
   public String toString() {

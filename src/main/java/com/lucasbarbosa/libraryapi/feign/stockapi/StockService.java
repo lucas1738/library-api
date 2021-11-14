@@ -13,7 +13,7 @@ import java.util.Optional;
 /** @author Lucas Barbosa on 01/08/2021 */
 @Service
 @Slf4j
-public class StockService implements IntegrationClient<BigDecimal> {
+public class StockService implements IntegrationClient<BigDecimal, StockService> {
 
   private final StockClient stockClient;
 
@@ -44,7 +44,7 @@ public class StockService implements IntegrationClient<BigDecimal> {
   }
 
   @Override
-  public Class identify() {
-    return this.getClass();
+  public Class<StockService> identify() {
+    return StockService.class;
   }
 }

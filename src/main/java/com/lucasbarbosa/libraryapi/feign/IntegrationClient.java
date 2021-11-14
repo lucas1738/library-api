@@ -10,9 +10,9 @@ import java.util.logging.Logger;
 import static com.lucasbarbosa.libraryapi.driver.utils.ExceptionUtils.retrieveExceptionClassName;
 
 /** @author Lucas Barbosa on 08/08/2021 */
-public interface IntegrationClient<T> {
+public interface IntegrationClient<R, S> {
 
-  default Optional<T> retrieveClient(Optional<Map<String, Object>> params) {
+  default Optional<R> retrieveClient(Optional<Map<String, Object>> params) {
     try {
       return writeClientIntegration(params);
     } catch (Exception exception) {
@@ -21,11 +21,12 @@ public interface IntegrationClient<T> {
     }
   }
 
-  Optional<T> writeClientIntegration(Optional<Map<String, Object>> params);
+  Optional<R> writeClientIntegration(Optional<Map<String, Object>> params);
 
-  Class identify();
+  Class<S> identify();
 
   default void logClientFallback(Exception exception) {
+
     Logger logger = Logger.getLogger(identify().getName());
     logger.log(
         Level.WARNING,

@@ -13,7 +13,7 @@ import static com.lucasbarbosa.libraryapi.feign.IntegrationParamEnum.CUSTOMER_NA
 /** @author Lucas Barbosa on 01/08/2021 */
 @Service
 @Slf4j
-public class AgifyService implements IntegrationClient<Integer> {
+public class AgifyService implements IntegrationClient<Integer, AgifyService> {
 
   private final AgifyClient agifyClient;
 
@@ -39,7 +39,7 @@ public class AgifyService implements IntegrationClient<Integer> {
   }
 
   @Override
-  public Class identify() {
-    return this.getClass();
+  public Class<AgifyService> identify() {
+    return AgifyService.class;
   }
 }

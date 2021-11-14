@@ -4,6 +4,7 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'org.flywaydb.flyway' version '6.4.3'
+    id "org.sonarqube" version "3.3"
 }
 
 group = 'com.lucasbarbosa'
@@ -24,11 +25,6 @@ configurations {
     contractTestImplementation.extendsFrom testImplementation
     contractTestRuntime.extendsFrom testRuntime
 
-}
-
-jacoco {
-    toolVersion = "0.8.5"
-    reportsDirectory = file("$buildDir/jacoco")
 }
 
 sourceSets {
@@ -62,7 +58,9 @@ sourceSets {
 }
 
 flyway {
-    if(!project.hasProperty('env')) {ext.env = 'dev'}
+    if (!project.hasProperty('env')) {
+        ext.env = 'dev'
+    }
     apply from: "env/${env}.gradle"
     url = flyway.url
     user = flyway.user
@@ -123,6 +121,11 @@ task quality(type: GradleBuild) {
     doLast { println 'Quality Assurance Done' }
 }
 
+task inspect(type: GradleBuild) {
+    tasks = ['clean', 'jacocoTestReport', 'jacocoTestCoverageVerification', 'sonarqube']
+    doLast { println 'Inspection Done' }
+}
+
 tasks.withType(Test) {
     testLogging {
         events "passed", "skipped", "failed"
@@ -135,8 +138,48 @@ test {
     finalizedBy jacocoTestReport
 }
 
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDirectory = file("$buildDir/jacoco")
+}
+
+sonarqube {
+    properties {
+        property "sonar.sourceEncoding", "UTF-8"
+        property "sonar.exclusions", "**/driver/**, **/feign/**"
+        property "sonar.coverage.jacoco.xmlReportPaths", "build/jacoco/test/jacocoTestReport.xml"
+
+
+    }
+}
+
 jacocoTestReport {
     dependsOn test
+
+    reports {
+        xml.required = true
+    }
+
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: [
+                    "**/driver/*",
+                    "**/feign/*",
+            ])
+        }))
+    }
+
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                counter = 'LINE'
+                minimum = 0.3
+            }
+        }
+    }
 }
 
 check.dependsOn contractTest

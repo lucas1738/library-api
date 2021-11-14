@@ -10,7 +10,7 @@ import java.util.Optional;
 /** @author Lucas Barbosa on 08/08/2021 */
 @Service
 @Slf4j
-public class CustomerService implements IntegrationClient<CustomerVO> {
+public class CustomerService implements IntegrationClient<CustomerVO, CustomerService> {
 
   private final UserClient userClient;
 
@@ -34,7 +34,7 @@ public class CustomerService implements IntegrationClient<CustomerVO> {
   }
 
   @Override
-  public Class identify() {
-    return this.getClass();
+  public Class<CustomerService> identify() {
+    return CustomerService.class;
   }
 }

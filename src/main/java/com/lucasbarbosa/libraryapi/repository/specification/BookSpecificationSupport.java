@@ -1,7 +1,6 @@
 package com.lucasbarbosa.libraryapi.repository.specification;
 
 import com.lucasbarbosa.libraryapi.model.entity.Book;
-import com.lucasbarbosa.libraryapi.model.entity.Book_;
 import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -37,7 +36,6 @@ public class BookSpecificationSupport {
   }
 
   public static Specification<Book> setUpNumberPages(int maxNumberPages) {
-    return (root, query, cb) ->
-        cb.lessThanOrEqualTo(root.get(NUMBER_PAGES), maxNumberPages);
+    return (root, query, cb) -> cb.lessThanOrEqualTo(root.get(NUMBER_PAGES), maxNumberPages);
   }
 }

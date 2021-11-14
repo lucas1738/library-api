@@ -14,7 +14,7 @@ import static java.util.Comparator.comparing;
 /** @author Lucas Barbosa on 08/08/2021 */
 @Service
 @Slf4j
-public class NationalizeService implements IntegrationClient<String> {
+public class NationalizeService implements IntegrationClient<String, NationalizeService> {
 
   private final NationalizeClient nationalizeClient;
 
@@ -42,7 +42,7 @@ public class NationalizeService implements IntegrationClient<String> {
   }
 
   @Override
-  public Class identify() {
-    return this.getClass();
+  public Class<NationalizeService> identify() {
+    return NationalizeService.class;
   }
 }
