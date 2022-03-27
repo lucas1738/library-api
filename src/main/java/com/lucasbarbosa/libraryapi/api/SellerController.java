@@ -37,7 +37,7 @@ public class SellerController {
       value = {
         @ApiResponse(
             code = 201,
-            message = "Seller sucessfully registered",
+            message = "Seller successfully registered",
             response = SellerInfoResponse.class),
         @ApiResponse(code = 400, message = "Error due to incorrect request contract")
       })

@@ -28,6 +28,27 @@ Run the application with
     ./gradlew bootRun
 
 
+## Using migrations with Flyway
+
+### Default migration
+
+Executes flyway migration considering dev environment
+
+    ./gradlew flywayMigrate
+
+### Specific environment migration
+
+Executes flyway migration considering specify environment
+
+    ./gradlew flywayMigrate -Penv=qa
+
+
+## Running sonarqube
+
+Override gradle.properties with your own sonar config and run the following command
+
+    ./gradlew jacocoTestReport sonarqube   
+
 ## Running the tests
 
 Tests are divided in modules. There are two modules: test and contractTest

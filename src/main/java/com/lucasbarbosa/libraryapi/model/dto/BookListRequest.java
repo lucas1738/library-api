@@ -1,8 +1,12 @@
 package com.lucasbarbosa.libraryapi.model.dto;
 
+import com.lucasbarbosa.libraryapi.driver.validation.EnumAssurance;
 import com.lucasbarbosa.libraryapi.model.entity.Book;
+import com.lucasbarbosa.libraryapi.model.enums.BookGenreEnum;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.*;
 
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 import java.util.UUID;
 import java.util.function.Function;
@@ -20,8 +24,13 @@ public class BookListRequest {
 
   private List<String> books;
 
+  @ApiModelProperty(value = "Book author", example = "Joe Doe", required = true)
+  @NotEmpty(message = "author must not be empty or null")
   private String author;
 
+  @ApiModelProperty(value = "Book genre", example = "THRILLER", required = true)
+  @EnumAssurance(enumClass = BookGenreEnum.class, field = "bookGenre")
+  @NotEmpty(message = "bookGenre must not be empty or null")
   private String bookGenre;
 
   public static List<Book> toDomain(BookListRequest bookListRequest) {
