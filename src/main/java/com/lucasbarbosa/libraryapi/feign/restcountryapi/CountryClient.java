@@ -1,5 +1,7 @@
 package com.lucasbarbosa.libraryapi.feign.restcountryapi;
 
+import java.util.List;
+
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -9,5 +11,5 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface CountryClient {
 
   @GetMapping("/{code}")
-  CountryVO findCountryByInitial(@PathVariable(value = "code") String countryCode);
+  List<CountryVO> findCountryByInitial(@PathVariable(value = "code") String countryCode);
 }

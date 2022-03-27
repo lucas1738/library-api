@@ -1,5 +1,11 @@
 package com.lucasbarbosa.libraryapi.component;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Optional;
+
 import com.lucasbarbosa.libraryapi.feign.agifyapi.AgifyClient;
 import com.lucasbarbosa.libraryapi.feign.agifyapi.AgifyService;
 import com.lucasbarbosa.libraryapi.feign.agifyapi.AgifyVO;
@@ -19,40 +25,46 @@ import com.lucasbarbosa.libraryapi.pojo.CustomerRecommendationPojo;
 import com.lucasbarbosa.libraryapi.service.BookService;
 import com.lucasbarbosa.libraryapi.service.RecommendationService;
 import com.lucasbarbosa.libraryapi.service.impl.RecommendationServiceImpl;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
 
 import static org.apache.commons.lang3.StringUtils.EMPTY;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-/** @author Lucas Barbosa on 05/11/2021 */
+/**
+ * @author Lucas Barbosa on 05/11/2021
+ */
 public class CustomerRecommendationTestSupport {
 
-  @Mock protected RecommendationService recommendationService;
+  @Mock
+  protected RecommendationService recommendationService;
 
-  @Mock protected CustomerService customerService;
+  @Mock
+  protected CustomerService customerService;
 
-  @Mock protected AgifyService agifyService;
+  @Mock
+  protected AgifyService agifyService;
 
-  @Mock protected AgifyClient agifyClient;
+  @Mock
+  protected AgifyClient agifyClient;
 
-  @Mock protected NationalizeService nationalizeService;
+  @Mock
+  protected NationalizeService nationalizeService;
 
-  @Mock protected NationalizeClient nationalizeClient;
+  @Mock
+  protected NationalizeClient nationalizeClient;
 
-  @Mock protected RestCountryService restCountryService;
+  @Mock
+  protected RestCountryService restCountryService;
 
-  @Mock protected CountryClient countryClient;
+  @Mock
+  protected CountryClient countryClient;
 
-  @Mock protected BookService bookService;
+  @Mock
+  protected BookService bookService;
 
   protected CustomerVO customerVO;
 
@@ -81,7 +93,7 @@ public class CustomerRecommendationTestSupport {
   }
 
   protected void buildCountryVO(String country) {
-    countryVO = CountryVO.builder().name(country).build();
+    countryVO = CountryVO.build(country);
   }
 
   protected void buildAgifyVO(String age) {
@@ -107,7 +119,7 @@ public class CustomerRecommendationTestSupport {
     buildNationalizeVO(pojo);
     when(nationalizeClient.findCustomerCountry(any())).thenReturn(nationalizeVO);
     buildCountryVO(pojo.getCustomerCountry());
-    when(countryClient.findCountryByInitial(any())).thenReturn(countryVO);
+    when(countryClient.findCountryByInitial(any())).thenReturn(List.of(countryVO));
     buildAgifyVO(pojo.getCustomerAge());
     when(agifyClient.findCustomerAge(any())).thenReturn(agifyVO);
     when(bookService.fetchBooksByGenre(any())).thenReturn(Collections.emptyList());
