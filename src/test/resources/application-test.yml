@@ -1,0 +1,69 @@
+spring:
+  flyway:
+    enabled: false
+
+scenarios:
+  customerRecommendation:
+    0:
+      customerAge: 14
+      recommendation: COMEDY
+      customerFirstName: Alex
+      customerCountryOne: BR
+      customerCountryProbabilityOne: 1
+      customerCountryTwo: AR
+      customerCountryProbabilityTwo: 0
+      customerCountry: Brazil
+    1:
+      customerAge: 24
+      recommendation: ACTION
+      customerFirstName: Marvin
+      customerCountryOne: CL
+      customerCountryProbabilityOne: 1
+      customerCountryTwo: CN
+      customerCountryProbabilityTwo: 0
+      customerCountry: Chile
+    2:
+      customerAge: 34
+      recommendation: MYSTERY
+      customerFirstName: David
+      customerCountryOne: AR
+      customerCountryProbabilityOne: 1
+      customerCountryTwo: GB
+      customerCountryProbabilityTwo: 0
+      customerCountry: Argentina
+    3:
+      customerAge: 54
+      recommendation: THRILLER
+      customerFirstName: Thomas
+      customerCountryOne: CO
+      customerCountryProbabilityOne: 1
+      customerCountryTwo: AR
+      customerCountryProbabilityTwo: 0
+      customerCountry: Colombia
+    4:
+      customerAge: 64
+      recommendation: FANTASY
+      customerFirstName: Albert
+      customerCountryOne: BR
+      customerCountryProbabilityOne: 1
+      customerCountryTwo: FR
+      customerCountryProbabilityTwo: 0
+      customerCountry: Brazil
+    5:
+      customerAge: 74
+      recommendation: HORROR
+      customerFirstName: Carlos
+      customerCountryOne: PT
+      customerCountryProbabilityOne: 1
+      customerCountryTwo: GB
+      customerCountryProbabilityTwo: 0
+      customerCountry: Portugal
+    6:
+      customerAge: 80
+      recommendation: ROMANCE
+      customerFirstName: Alonso
+      customerCountryOne: US
+      customerCountryProbabilityOne: 1
+      customerCountryTwo: CO
+      customerCountryProbabilityTwo: 0
+      customerCountry: United States

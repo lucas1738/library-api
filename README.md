@@ -1,93 +1,85 @@
-# Project Title
+# Library API
 
-One Paragraph of the project description
-
-Initially appeared on
-[gist](https://gist.github.com/PurpleBooth/109311bb0361f32d87a2). But the page cannot open anymore so that is why I have moved it here.
+Proof of Concept developed to put into practice Java 11 features in a Microsservices environment. 
 
 ## Getting Started
 
 These instructions will give you a copy of the project up and running on
-your local machine for development and testing purposes. See deployment
-for notes on deploying the project on a live system.
+your local machine for development and testing purposes. 
 
 ### Prerequisites
 
-Requirements for the software and other tools to build, test and push 
-- [Example 1](https://www.example.com)
-- [Example 2](https://www.example.com)
+Requirements for the software and other tools to build, test and push
+- Java 11
+- Gradle
+- Docker
 
 ### Installing
 
 A step by step series of examples that tell you how to get a development
 environment running
 
-Say what the step will be
+Set up the project database using Docker
 
-    Give the example
+    docker run --name containerPostgres --restart=always -e POSTGRES_USER=lucasbarbosa -e POSTGRES_PASSWORD=lucas123 -e POSTGRES_DB=library_db -p 5432:5432 -d postgres
 
-And repeat
+Run the application with
 
-    until finished
+    ./gradlew bootRun
 
-End with an example of getting some data out of the system or using it
-for a little demo
+
+## Using migrations with Flyway
+
+### Default migration
+
+Executes flyway migration considering dev environment
+
+    ./gradlew flywayMigrate
+
+### Specific environment migration
+
+Executes flyway migration considering specify environment
+
+    ./gradlew flywayMigrate -Penv=qa
+
+
+## Running sonarqube
+
+Override gradle.properties with your own sonar config and run the following command
+
+    ./gradlew jacocoTestReport sonarqube   
 
 ## Running the tests
 
-Explain how to run the automated tests for this system
+Tests are divided in modules. There are two modules: test and contractTest
 
-### Sample Tests
+### Run Unit Tests
 
-Explain what these tests test and why
+Tests responsible for assuring of code components' quality 
 
-    Give an example
+    ./gradlew test
 
-### Style test
+### Run Contract Test
 
-Checks if the best practices and the right coding style has been used.
+Tests responsible for assuring that API's contract is accurate
 
-    Give an example
+    ./gradlew contractTest
 
-## Deployment
+### Run All Tests
 
-Add additional notes to deploy this on a live system
+Run all automate test to assure code quality
 
-## Built With
+    ./gradlew quality
 
-  - [Contributor Covenant](https://www.contributor-covenant.org/) - Used
-    for the Code of Conduct
-  - [Creative Commons](https://creativecommons.org/) - Used to choose
-    the license
+## Stage
 
-## Contributing
+Before commiting please run the following command to clean and build the project
 
-Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code
-of conduct, and the process for submitting pull requests to us.
+    ./gradlew stage
 
-## Versioning
-
-We use [Semantic Versioning](http://semver.org/) for versioning. For the versions
-available, see the [tags on this
-repository](https://github.com/PurpleBooth/a-good-readme-template/tags).
 
 ## Authors
 
-  - **Billie Thompson** - *Provided README Template* -
-    [PurpleBooth](https://github.com/PurpleBooth)
+- **Lucas Magalhães** 
+  [GitHub](https://github.com/lucasmagalhaees)
 
-See also the list of
-[contributors](https://github.com/PurpleBooth/a-good-readme-template/contributors)
-who participated in this project.
-
-## License
-
-This project is licensed under the [CC0 1.0 Universal](LICENSE.md)
-Creative Commons License - see the [LICENSE.md](LICENSE.md) file for
-details
-
-## Acknowledgments
-
-  - Hat tip to anyone whose code is used
-  - Inspiration
-  - etc
