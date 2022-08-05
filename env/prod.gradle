@@ -1,7 +1,5 @@
 ext {
     flyway {
         url=${databaseUrl}
-        user=${databaseUsername}
-        password=${databasePassword}
     }
 }
