@@ -1,0 +1,31 @@
+version: '3.7'
+services:
+  db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_USER: lucasbarbosa
+      POSTGRES_PASSWORD: lucas123
+      POSTGRES_DB: library_db
+    ports:
+      - "5400:5432"
+    networks:
+      - library-network
+  libraryapi:
+    build: .
+    container_name: library_api
+    restart: always
+    environment:
+      PROFILE: stage
+      DATABASE_URL: jdbc:postgresql://db:5432/library_db?useSSL=false
+      DATABASE_USERNAME: lucasbarbosa
+      DATABASE_PASSWORD: lucas123
+    ports:
+      - "9092:9090"
+    depends_on:
+      - db
+    networks:
+      - library-network
+networks:
+  library-network:
+    driver: bridge

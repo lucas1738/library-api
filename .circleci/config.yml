@@ -1,0 +1,25 @@
+version: 2.1
+
+workflows:
+  build-deploy:
+    jobs:
+      - build-deploy:
+          filters:
+            branches:
+              only: master
+
+jobs:
+  build-deploy:
+    machine:
+      image: ubuntu-2204:current
+    steps:
+      - checkout
+      - run:
+          name: Build and push Docker image to Heroku
+          command: |
+            set -x
+            sudo curl https://cli-assets.heroku.com/install.sh | sh
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set PROFILE=prod -a library-spring-api
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a library-spring-api web
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a library-spring-api web
