@@ -1,5 +1,5 @@
 ext {
     flyway {
-        url=${databaseUrl}
+        url='postgres://localhost:5432/library_db'
     }
 }
