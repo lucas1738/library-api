@@ -20,6 +20,7 @@ jobs:
             set -x
             sudo curl https://cli-assets.heroku.com/install.sh | sh
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:login
+            HEROKU_API_KEY=${HEROKU_API_KEY} heroku addons:create heroku-postgresql:hobby-dev
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku config:set PROFILE=prod -a library-spring-api
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:push -a library-spring-api web
             HEROKU_API_KEY=${HEROKU_API_KEY} heroku container:release -a library-spring-api web
