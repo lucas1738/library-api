@@ -56,16 +56,20 @@ sourceSets {
     }
 
 }
+def profile = System.getenv('SPRING_PROFILES_ACTIVE')
 
-flyway {
-    if (!project.hasProperty('env')) {
-        ext.env = 'dev'
+if (profile != "prod") {
+    flyway {
+        if (!project.hasProperty('env')) {
+            ext.env = 'dev'
+        }
+        apply from: "env/${env}.gradle"
+        url = flyway.url
+        user = flyway.user
+        password = flyway.password
     }
-    apply from: "env/${env}.gradle"
-    url = flyway.url
-    user = flyway.user
-    password = flyway.password
 }
+
 
 repositories {
     mavenCentral()
