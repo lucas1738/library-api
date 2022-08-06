@@ -1,13 +1,14 @@
 package com.lucasbarbosa.libraryapi.feign.customerapi;
 
 import com.lucasbarbosa.libraryapi.feign.IntegrationClient;
+import java.util.Map;
+import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Map;
-import java.util.Optional;
-
-/** @author Lucas Barbosa on 08/08/2021 */
+/**
+ * @author Lucas Barbosa on 08/08/2021
+ */
 @Service
 @Slf4j
 public class CustomerService implements IntegrationClient<CustomerVO, CustomerService> {
@@ -29,12 +30,19 @@ public class CustomerService implements IntegrationClient<CustomerVO, CustomerSe
         .or(
             () -> {
               log.warn("m=retrieveUser failed");
-              return Optional.empty();
+              return Optional.of(
+                  CustomerVO.builder().firstName("Max").lastName("Kaufmann").build());
             });
   }
 
   @Override
   public Class<CustomerService> identify() {
     return CustomerService.class;
+  }
+
+  @Override
+  public Optional<CustomerVO> value() {
+    return Optional.of(
+        CustomerVO.builder().firstName("Max").lastName("Kaufmann").build());
   }
 }

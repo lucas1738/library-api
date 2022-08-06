@@ -39,12 +39,17 @@ public class StockService implements IntegrationClient<BigDecimal, StockService>
         .or(
             () -> {
               log.warn("m=fetchAvailableStock failed");
-              return Optional.empty();
+              return Optional.of(BigDecimal.ONE);
             });
   }
 
   @Override
   public Class<StockService> identify() {
     return StockService.class;
+  }
+
+  @Override
+  public Optional<BigDecimal> value() {
+    return Optional.of(BigDecimal.ONE);
   }
 }

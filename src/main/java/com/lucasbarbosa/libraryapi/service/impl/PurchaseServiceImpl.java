@@ -35,8 +35,10 @@ public class PurchaseServiceImpl implements PurchaseService {
   public Optional<BigDecimal> obtainPurchaseFinalPrice() {
     CompletableFuture<BigDecimal> priceFuture =
         supplyAsync(() -> stockService.retrieveClient(empty()))
+            .completeOnTimeout(stockService.value(), stockService.timeout(), stockService.timeUnit())
             .thenCombine(
-                supplyAsync(() -> productService.retrieveClient(empty())),
+                supplyAsync(() -> productService.retrieveClient(empty()))
+                    .completeOnTimeout(productService.value(), productService.timeout(), productService.timeUnit()),
                 (stock, price) ->
                     areAllPresent(List.of(stock, price))
                         ? stock.get().multiply(price.get())

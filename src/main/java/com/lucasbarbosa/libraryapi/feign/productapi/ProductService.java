@@ -30,12 +30,17 @@ public class ProductService implements IntegrationClient<BigDecimal, ProductServ
         .or(
             () -> {
               log.warn("m=fetchProductPrice failed");
-              return Optional.empty();
+              return Optional.of(BigDecimal.TEN);
             });
   }
 
   @Override
   public Class<ProductService> identify() {
     return ProductService.class;
+  }
+
+  @Override
+  public Optional<BigDecimal> value() {
+    return Optional.of(BigDecimal.TEN);
   }
 }

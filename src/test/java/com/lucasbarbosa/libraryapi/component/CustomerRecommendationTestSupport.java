@@ -1,5 +1,6 @@
 package com.lucasbarbosa.libraryapi.component;
 
+import com.lucasbarbosa.libraryapi.feign.customerapi.UserClient;
 import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.Comparator;
@@ -46,6 +47,9 @@ public class CustomerRecommendationTestSupport {
   protected CustomerService customerService;
 
   @Mock
+  protected UserClient userClient;
+
+  @Mock
   protected AgifyService agifyService;
 
   @Mock
@@ -78,6 +82,7 @@ public class CustomerRecommendationTestSupport {
   void initializeTest() {
     MockitoAnnotations.initMocks(this);
     nationalizeService = new NationalizeService(nationalizeClient);
+    customerService = new CustomerService(userClient);
     restCountryService = new RestCountryService(countryClient);
     agifyService = new AgifyService(agifyClient);
     recommendationService =
@@ -115,7 +120,7 @@ public class CustomerRecommendationTestSupport {
 
   protected void setUpTestMocks(CustomerRecommendationPojo pojo) {
     buildCustomerVO(pojo.getCustomerFirstName());
-    when(customerService.retrieveClient(any())).thenReturn(Optional.of(customerVO));
+    when(userClient.findCustomer()).thenReturn(customerVO);
     buildNationalizeVO(pojo);
     when(nationalizeClient.findCustomerCountry(any())).thenReturn(nationalizeVO);
     buildCountryVO(pojo.getCustomerCountry());
