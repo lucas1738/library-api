@@ -37,12 +37,17 @@ public class NationalizeService implements IntegrationClient<String, Nationalize
         .or(
             () -> {
               log.warn("m=retrieveCustomerCountry failed");
-              return Optional.empty();
+              return Optional.of("Germany");
             });
   }
 
   @Override
   public Class<NationalizeService> identify() {
     return NationalizeService.class;
+  }
+
+  @Override
+  public Optional<String> value() {
+    return Optional.of("Germany");
   }
 }

@@ -65,6 +65,7 @@ public class RecommendationServiceImpl implements RecommendationService {
   public Optional<CustomerLibrary> fetchCustomerLibrary() {
     CompletableFuture<CustomerLibrary> customerFuture =
         supplyAsync(() -> customerService.retrieveClient(Optional.empty()))
+            .completeOnTimeout(customerService.value(), customerService.timeout(), customerService.timeUnit())
             .thenCompose(this::retrieveCustomerInfo);
 
     return ofNullable(customerFuture.get()).filter(Predicate.not(ObjectUtils::isEmpty));
@@ -97,7 +98,8 @@ public class RecommendationServiceImpl implements RecommendationService {
     agifyParams.put(
         CUSTOMER_NAME.getValue(),
         customerVO.map(CustomerVO::getFirstName).orElse(StringUtils.EMPTY));
-    var ageFuture = supplyAsync(() -> agifyService.retrieveClient(Optional.of(agifyParams)));
+    var ageFuture = supplyAsync(() -> agifyService.retrieveClient(Optional.of(agifyParams)))
+        .completeOnTimeout(agifyService.value(), agifyService.timeout(), agifyService.timeUnit());
     return ageFuture.join();
   }
 
@@ -108,6 +110,7 @@ public class RecommendationServiceImpl implements RecommendationService {
         customerVO.map(CustomerVO::getFirstName).orElse(StringUtils.EMPTY));
     var countryFuture =
         supplyAsync(() -> nationalizeService.retrieveClient(Optional.of(nationalizeParams)))
+            .completeOnTimeout(nationalizeService.value(), nationalizeService.timeout(), nationalizeService.timeUnit())
             .thenCompose(this::translateInitialIntoCountry);
     return countryFuture.join();
   }
@@ -116,7 +119,8 @@ public class RecommendationServiceImpl implements RecommendationService {
       Optional<String> countryInitial) {
     Map<String, Object> restCountryParams = new HashMap<>();
     countryInitial.ifPresent(country -> restCountryParams.put(COUNTRY_CODE.getValue(), country));
-    return supplyAsync(() -> restCountryService.retrieveClient(Optional.of(restCountryParams)));
+    return supplyAsync(() -> restCountryService.retrieveClient(Optional.of(restCountryParams)))
+        .completeOnTimeout(restCountryService.value(), restCountryService.timeout(), restCountryService.timeUnit());
   }
 
   private CompletableFuture<CustomerLibrary> retrieveCustomerInfo(Optional<CustomerVO> customerVO) {

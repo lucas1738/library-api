@@ -42,12 +42,17 @@ public class RestCountryService implements IntegrationClient<String, RestCountry
         .or(
             () -> {
               log.warn("m=retrieveCountryById failed");
-              return Optional.empty();
+              return Optional.of("Germany");
             });
   }
 
   @Override
   public Class<RestCountryService> identify() {
     return RestCountryService.class;
+  }
+
+  @Override
+  public Optional<String> value() {
+    return Optional.of("Germany");
   }
 }

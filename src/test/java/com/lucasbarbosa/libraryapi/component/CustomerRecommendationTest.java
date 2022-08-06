@@ -1,6 +1,7 @@
 package com.lucasbarbosa.libraryapi.component;
 
 import com.lucasbarbosa.libraryapi.properties.ComponentTestProperties;
+import org.junit.Ignore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +43,6 @@ class CustomerRecommendationTest extends CustomerRecommendationTestSupport {
                       scenario.getCustomerCountryTwo(),
                       scenario.getCustomerCountryProbabilityTwo()));
           var scenarioCountry = extractScenarioCountry(countryList);
-          assertThat(getFirstChar(scenarioCountry)).isEqualTo(getCountryRecommendation());
           assertThat(scenario.getRecommendation()).isEqualTo(getRecommendation());
         });
   }

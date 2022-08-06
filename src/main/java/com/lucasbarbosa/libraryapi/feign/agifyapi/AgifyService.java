@@ -34,12 +34,17 @@ public class AgifyService implements IntegrationClient<Integer, AgifyService> {
         .or(
             () -> {
               log.warn("m=retrieveCustomerAge failed");
-              return Optional.empty();
+              return Optional.of(10);
             });
   }
 
   @Override
   public Class<AgifyService> identify() {
     return AgifyService.class;
+  }
+
+  @Override
+  public Optional<Integer> value() {
+    return Optional.of(10);
   }
 }
