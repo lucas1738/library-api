@@ -5,7 +5,7 @@ server:
 
 spring:
   flyway:
-    enabled: false
+    baseline-on-migrate: true
   jpa:
     database: POSTGRESQL
     show-sql: true

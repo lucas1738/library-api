@@ -1,7 +1,7 @@
 ext {
     flyway {
-        url=${databaseUrl}
-        user=${databaseUsername}
-        password=${databasePassword}
+        url='jdbc:postgresql://db:5432/library_db?useSSL=false'
+        user='lucasbarbosa'
+        password='lucas123'
     }
 }
