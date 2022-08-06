@@ -58,7 +58,6 @@ sourceSets {
 }
 def profile = System.getenv('SPRING_PROFILES_ACTIVE')
 
-if (profile != "prod") {
     flyway {
         if (!project.hasProperty('env')) {
             ext.env = 'dev'
@@ -68,7 +67,6 @@ if (profile != "prod") {
         user = flyway.user
         password = flyway.password
     }
-}
 
 
 repositories {
